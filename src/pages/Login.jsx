@@ -55,11 +55,11 @@ const LoginPage = () => {
               {error?.response.data.message}
             </p>
           )}
-          {message && (
+          {/* {message && (
             <p className="mt-4 text-lg font-semibold text-center text-red-500">
               {message}
             </p>
-          )}
+          )} */}
           <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
             <div className="grid gap-y-4">
               <Input

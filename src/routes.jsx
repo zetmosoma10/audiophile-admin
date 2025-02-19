@@ -6,31 +6,37 @@ import AppLayout from "./AppLayout";
 import Products from "./pages/Products";
 import Carts from "./pages/Carts";
 import LoginPage from "./pages/Login";
+import RequireAuth from "./components/RequireAuth";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <AppLayout />,
+    element: <RequireAuth />,
     children: [
       {
-        index: true,
-        element: <Dashboard />,
-      },
-      {
-        path: "users",
-        element: <Users />,
-      },
-      {
-        path: "orders",
-        element: <Orders />,
-      },
-      {
-        path: "products",
-        element: <Products />,
-      },
-      {
-        path: "carts",
-        element: <Carts />,
+        path: "/",
+        element: <AppLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "users",
+            element: <Users />,
+          },
+          {
+            path: "orders",
+            element: <Orders />,
+          },
+          {
+            path: "products",
+            element: <Products />,
+          },
+          {
+            path: "carts",
+            element: <Carts />,
+          },
+        ],
       },
     ],
   },
