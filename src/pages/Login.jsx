@@ -5,7 +5,7 @@ import { loginSchema } from "../schemas/loginSchema";
 import { useLogin } from "../hooks/useLogin";
 import Input from "../components/Input";
 
-const LoginPage = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
@@ -108,4 +108,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;

@@ -5,8 +5,9 @@ import Orders from "./pages/Orders";
 import AppLayout from "./AppLayout";
 import Products from "./pages/Products";
 import Carts from "./pages/Carts";
-import LoginPage from "./pages/Login";
+import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
   },
   {
     path: "login",
-    element: <LoginPage />,
+    element: <Login />,
+  },
+  {
+    path: "register",
+    element: <Register />,
   },
 ]);
 
