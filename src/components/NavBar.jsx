@@ -1,12 +1,20 @@
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link, useLocation } from "react-router-dom";
 import SideBar from "./SideBar";
+import useAuthStore from "./../stores/authStore";
+import { jwtDecode } from "jwt-decode";
 
 const NavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const location = useLocation();
+  const { token } = useAuthStore();
+
+  let user = null;
+  if (token) {
+    user = jwtDecode(token);
+  }
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -34,10 +42,18 @@ const NavBar = () => {
         </div>
         <div className="flex items-center space-x-2">
           <FaUserCircle size={30} />
-          {/* <p className="pr-2 font-medium text-gray-900 border-r-2 border-r-gray-900">
-            Zet
-          </p> */}
-          <button className="font-semibold text-red-500">Logout</button>
+          {user && (
+            <p className="pr-2 font-medium text-gray-900 border-r-2 opacity-70 border-r-gray-900">
+              {user.firstName}
+            </p>
+          )}
+          {user ? (
+            <Link className="font-semibold">Logout</Link>
+          ) : (
+            <Link to="login" className="font-semibold">
+              Login
+            </Link>
+          )}
         </div>
       </nav>
       {isSidebarOpen && (
