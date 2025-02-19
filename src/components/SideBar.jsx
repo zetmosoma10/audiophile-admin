@@ -26,7 +26,7 @@ const SideBar = ({ closeSidebar }) => {
               to={item.path}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center space-x-2 hover:bg-slate-100 p-2 hover:rounded-lg bg-slate-100"
+                  ? "flex items-center space-x-2 hover:bg-slate-100 p-2 bg-slate-100 rounded-lg"
                   : "flex items-center space-x-2 hover:bg-slate-100 p-2 hover:rounded-lg"
               }
             >

@@ -25,9 +25,6 @@ const Register = () => {
         reset();
         navigate("/", { replace: true });
       },
-      onError: (error) => {
-        console.log("Error", error);
-      },
     });
   };
 

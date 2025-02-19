@@ -8,6 +8,7 @@ import Carts from "./pages/Carts";
 import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
 import Register from "./pages/Register";
+import Logout from "./pages/Logout";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
           {
             path: "carts",
             element: <Carts />,
+          },
+          {
+            path: "logout",
+            element: <Logout />,
           },
         ],
       },

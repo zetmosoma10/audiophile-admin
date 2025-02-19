@@ -48,7 +48,9 @@ const NavBar = () => {
             </p>
           )}
           {user ? (
-            <Link className="font-semibold">Logout</Link>
+            <Link to="logout" className="font-semibold">
+              Logout
+            </Link>
           ) : (
             <Link to="login" className="font-semibold">
               Login
