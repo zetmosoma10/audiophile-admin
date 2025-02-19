@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import SideBar from "./SideBar";
 
 const NavBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const location = useLocation();
 
   const openSidebar = () => {
     setIsSidebarOpen(true);
@@ -14,6 +15,10 @@ const NavBar = () => {
   const closeSidebar = () => {
     setIsSidebarOpen(false);
   };
+
+  useEffect(() => {
+    closeSidebar();
+  }, [location.pathname]);
 
   return (
     <header className="bg-white border-b ">
@@ -30,7 +35,7 @@ const NavBar = () => {
         <FaUserCircle size={30} />
       </nav>
       {isSidebarOpen && (
-        <div className="fixed inset-0 flex md:hidden">
+        <div className="fixed inset-0 z-10 flex md:hidden">
           <div
             onClick={closeSidebar}
             className="fixed inset-0 bg-black opacity-50"

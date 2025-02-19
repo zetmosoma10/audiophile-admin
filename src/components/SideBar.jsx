@@ -4,7 +4,7 @@ import { IoAddSharp } from "react-icons/io5";
 
 const SideBar = ({ closeSidebar }) => {
   return (
-    <div className="min-h-screen px-5 pt-5 bg-white">
+    <div className="min-h-screen px-5 pt-5 bg-white ">
       <div className="flex items-center justify-between">
         <Link
           to="/"
