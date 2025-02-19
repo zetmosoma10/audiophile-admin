@@ -11,3 +11,12 @@ body {
 .max-container {
   @apply max-w-[1110px] w-[90%] mx-auto;
 }
+
+@layer components {
+  .btn {
+    @apply text-sm text-center font-bold tracking-[1px] uppercase py-[15px] px-[30px] block;
+  }
+  .btn-primary {
+    @apply text-white bg-ORANGE hover:bg-LIGHT_ORANGE focus:outline-none active:scale-[99%] active:bg-ORANGE;
+  }
+}

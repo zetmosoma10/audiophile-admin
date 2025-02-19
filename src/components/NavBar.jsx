@@ -32,7 +32,13 @@ const NavBar = () => {
             audiophile
           </Link>
         </div>
-        <FaUserCircle size={30} />
+        <div className="flex items-center space-x-2">
+          <FaUserCircle size={30} />
+          {/* <p className="pr-2 font-medium text-gray-900 border-r-2 border-r-gray-900">
+            Zet
+          </p> */}
+          <button className="font-semibold text-red-500">Logout</button>
+        </div>
       </nav>
       {isSidebarOpen && (
         <div className="fixed inset-0 z-10 flex md:hidden">
