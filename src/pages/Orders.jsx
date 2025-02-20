@@ -1,42 +1,9 @@
-import { useState } from "react";
-
-const orders = [
-  {
-    id: "#1001",
-    customer: "John Doe",
-    total: "$250.00",
-    status: "Pending",
-    payment: "Paid",
-    date: "2025-02-19",
-  },
-  {
-    id: "#1002",
-    customer: "Jane Smith",
-    total: "$120.00",
-    status: "Shipped",
-    payment: "Paid",
-    date: "2025-02-18",
-  },
-  {
-    id: "#1003",
-    customer: "Michael Brown",
-    total: "$480.00",
-    status: "Delivered",
-    payment: "Unpaid",
-    date: "2025-02-17",
-  },
-  {
-    id: "#1004",
-    customer: "Emily Davis",
-    total: "$300.00",
-    status: "Cancelled",
-    payment: "Refunded",
-    date: "2025-02-16",
-  },
-];
+import dayjs from "dayjs";
+import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 
 export default function OrderTable() {
-  const [orderData, setOrderData] = useState(orders);
+  const { data } = useGetAllOrders();
+  console.log(data);
 
   return (
     <div className="w-full overflow-x-auto max-container">
@@ -54,35 +21,40 @@ export default function OrderTable() {
             </tr>
           </thead>
           <tbody>
-            {orderData.map((order) => {
+            {data?.orders.map((order) => {
               let statusColor = "";
-              if (order.status === "Pending") {
+              if (order.status === "pending") {
                 statusColor = "bg-green-300 text-green-700";
-              } else if (order.status === "Shipped") {
+              } else if (order.status === "shipped") {
                 statusColor = "bg-orange-300 text-orange-700";
-              } else if (order.status === "Delivered") {
+              } else if (order.status === "delivered") {
                 statusColor = "bg-blue-300 text-blue-700";
-              } else if (order.status === "Cancelled") {
+              } else if (order.status === "cancelled") {
                 statusColor = "bg-red-300 text-red-700";
               }
 
               return (
-                <tr key={order.id} className="border hover:bg-gray-50">
-                  <td className="p-3 font-medium border">{order.id}</td>
-                  <td className="p-3 border">{order.customer}</td>
-                  <td className="p-3 border">{order.total}</td>
+                <tr key={order._id} className="border hover:bg-gray-50">
+                  <td className="p-3 font-medium border">
+                    #{order.orderNumber}
+                  </td>
+                  <td className="p-3 border">{order.name}</td>
+                  <td className="p-3 border">R{order.grandTotal}</td>
                   <td className={`p-3 text-[13px]  font-medium  border`}>
                     <span className={`px-2 py-1 rounded-2xl ${statusColor}`}>
                       {order.status}
                     </span>
                   </td>
 
-                  <td className="p-3 border opacity-50">{order.date}</td>
+                  <td className="p-3 border opacity-50">
+                    {dayjs(order.createdAt).format("DD MMM YYYY")}
+                  </td>
                   <td className="p-3 ">
                     <div className="flex gap-2">
                       <button className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200">
                         View
                       </button>
+
                       <button className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800">
                         Edit
                       </button>
