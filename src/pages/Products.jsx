@@ -1,45 +1,7 @@
-import { useState } from "react";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
 
-const products = [
-  {
-    id: 1,
-    name: "Wireless Headphones",
-    price: "$99.99",
-    stock: 15,
-    category: "Audio",
-    date: "2025-02-19",
-  },
-  {
-    id: 2,
-    name: "Gaming Mouse",
-    price: "$49.99",
-    stock: 25,
-    category: "Accessories",
-    date: "2025-02-18",
-  },
-  {
-    id: 3,
-    name: "Mechanical Keyboard",
-    price: "$129.99",
-    stock: 10,
-    category: "Accessories",
-    date: "2025-02-17",
-  },
-  {
-    id: 4,
-    name: "Smart Watch",
-    price: "$199.99",
-    stock: 8,
-    category: "Wearable",
-    date: "2025-02-16",
-  },
-];
-
 const Products = () => {
-  const [productData, setProductData] = useState(products);
   const { data } = useGetAllProducts();
-  console.log(data);
 
   return (
     <div className="w-full overflow-x-auto max-container">
