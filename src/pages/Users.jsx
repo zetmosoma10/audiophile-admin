@@ -1,11 +1,10 @@
-const usersData = [
-  { id: 1, name: "John Doe", email: "johndoe@example.com" },
-  { id: 2, name: "Jane Smith", email: "janesmith@example.com" },
-  { id: 3, name: "Mike Johnson", email: "mikejohnson@example.com" },
-  { id: 4, name: "Emily Davis", email: "emilydavis@example.com" },
-];
+import dayjs from "dayjs";
+import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
 
 const Users = () => {
+  const { data } = useGetAllCustomers();
+  console.log(data);
+
   return (
     <section className="max-container">
       <div className="max-container md:mx-0 max-w-0">
@@ -23,12 +22,18 @@ const Users = () => {
             </tr>
           </thead>
           <tbody>
-            {usersData.map((user) => (
-              <tr key={user.id} className="border hover:bg-gray-50">
-                <td className="p-2 border">{user.name}</td>
-                <td className="p-2 border opacity-50">{user.email}</td>
-                <td className="p-2 border">Admin</td>
-                <td className="p-2 border opacity-50">12 Jan, 2025</td>
+            {data?.customers.map((customer) => (
+              <tr key={customer._id} className="border hover:bg-gray-50">
+                <td className="p-2 border">
+                  {customer.firstName} {customer.lastName}
+                </td>
+                <td className="p-2 border opacity-50">{customer.email}</td>
+                <td className="p-2 border">
+                  {customer.isAdmin ? "Admin" : "Customer"}
+                </td>
+                <td className="p-2 border opacity-50">
+                  {dayjs(customer.createdAt).format("DD MMM YYYY")}
+                </td>
                 <td className="p-2 font-medium text-center border">
                   <button className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500">
                     Delete

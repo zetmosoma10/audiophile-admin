@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const axiosInstance = axios.create({
-  baseURL: `${baseUrl}/api`,
+  baseURL: `${baseUrl}/api/admin`,
 });
 
 axiosInstance.interceptors.request.use(
