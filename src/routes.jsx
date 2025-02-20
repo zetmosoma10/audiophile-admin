@@ -4,7 +4,6 @@ import Users from "./pages/Users";
 import Orders from "./pages/Orders";
 import AppLayout from "./AppLayout";
 import Products from "./pages/Products";
-import Carts from "./pages/Carts";
 import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
 import Register from "./pages/Register";
@@ -33,10 +32,6 @@ const router = createBrowserRouter([
           {
             path: "products",
             element: <Products />,
-          },
-          {
-            path: "carts",
-            element: <Carts />,
           },
           {
             path: "logout",

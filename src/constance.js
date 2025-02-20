@@ -1,7 +1,6 @@
 import { IoHomeOutline, IoReorderThreeOutline } from "react-icons/io5";
 import { TbUsers } from "react-icons/tb";
 import { AiOutlineProduct } from "react-icons/ai";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export const navLinks = [
   {
@@ -23,10 +22,5 @@ export const navLinks = [
     path: "products",
     icon: AiOutlineProduct,
     name: "products",
-  },
-  {
-    path: "carts",
-    icon: AiOutlineShoppingCart,
-    name: "carts",
   },
 ];

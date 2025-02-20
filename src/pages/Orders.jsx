@@ -39,19 +39,18 @@ export default function OrderTable() {
   const [orderData, setOrderData] = useState(orders);
 
   return (
-    <div className="w-full p-4 overflow-x-auto bg-white rounded-lg shadow-md">
-      <h2 className="mb-4 text-xl font-semibold">Orders</h2>
-      <div className="overflow-x-auto">
-        <table className="w-full min-w-[700px] border-collapse border border-gray-200 text-left">
+    <div className="w-full overflow-x-auto max-container">
+      <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
+      <div className="mt-8 overflow-x-auto">
+        <table className="w-full text-left bg-white border border-collapse border-gray-200">
           <thead className="bg-gray-100">
             <tr>
               <th className="p-3 border">Order ID</th>
               <th className="p-3 border">Customer</th>
               <th className="p-3 border">Total</th>
               <th className="p-3 border">Order Status</th>
-              <th className="p-3 border">Payment Status</th>
-              <th className="p-3 border">Date</th>
-              <th className="p-3 border">Actions</th>
+              <th className="p-3 border">Created</th>
+              <th className="p-3 border"></th>
             </tr>
           </thead>
           <tbody>
@@ -69,7 +68,7 @@ export default function OrderTable() {
 
               return (
                 <tr key={order.id} className="border hover:bg-gray-50">
-                  <td className="p-3 border">{order.id}</td>
+                  <td className="p-3 font-medium border">{order.id}</td>
                   <td className="p-3 border">{order.customer}</td>
                   <td className="p-3 border">{order.total}</td>
                   <td className={`p-3 text-[13px]  font-medium  border`}>
@@ -77,10 +76,8 @@ export default function OrderTable() {
                       {order.status}
                     </span>
                   </td>
-                  <td className="p-3 font-medium text-green-600 border">
-                    {order.payment}
-                  </td>
-                  <td className="p-3 border">{order.date}</td>
+
+                  <td className="p-3 border opacity-50">{order.date}</td>
                   <td className="p-3 ">
                     <div className="flex gap-2">
                       <button className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200">

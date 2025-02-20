@@ -7,16 +7,16 @@ const usersData = [
 
 const Users = () => {
   return (
-    <section className="md:ml-6">
+    <section className="max-container">
       <div className="max-container md:mx-0 max-w-0">
-        <h3 className="text-2xl font-bold text-gray-900">Users</h3>
-        <p className="opacity-50">There are 5 user accounts in database</p>
+        <h3 className="text-3xl font-semibold text-gray-900">Users</h3>
       </div>
       <div className="w-full mt-8 overflow-x-auto">
-        <table className="w-full bg-white border border-collapse border-gray-300 ">
-          <thead className="overflow-hidden">
-            <tr className="text-left text-gray-900 uppercase bg-gray-100">
+        <table className="w-full text-left bg-white border border-collapse border-gray-300">
+          <thead className="bg-gray-200">
+            <tr>
               <th className="p-2 border">Name</th>
+              <th className="p-2 border">Email</th>
               <th className="p-2 border">Role</th>
               <th className="p-2 border">Created</th>
               <th className="p-2 border"></th>
@@ -24,26 +24,13 @@ const Users = () => {
           </thead>
           <tbody>
             {usersData.map((user) => (
-              <tr key={user.id} className="text-gray-900 ">
-                <td className="p-2 border">
-                  <div className="flex items-center space-x-2">
-                    <div className="p-2 bg-gray-200 rounded-full">
-                      {user.name[0]}
-                    </div>
-                    <div>
-                      <p className="text-base font-semibold">{user.name}</p>
-                      <p className="text-sm font-medium opacity-50">
-                        {user.email}
-                      </p>
-                    </div>
-                  </div>
-                </td>
-                <td className="p-2 font-medium border">Admin</td>
-                <td className="p-2 font-medium border opacity-50">
-                  12 Jan, 2025
-                </td>
+              <tr key={user.id} className="border hover:bg-gray-50">
+                <td className="p-2 border">{user.name}</td>
+                <td className="p-2 border opacity-50">{user.email}</td>
+                <td className="p-2 border">Admin</td>
+                <td className="p-2 border opacity-50">12 Jan, 2025</td>
                 <td className="p-2 font-medium text-center border">
-                  <button className="text-red-500 bg-transparent border-none hover:text-red-600">
+                  <button className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500">
                     Delete
                   </button>
                 </td>
