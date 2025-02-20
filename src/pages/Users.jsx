@@ -11,7 +11,7 @@ const Users = () => {
         <h3 className="text-3xl font-semibold text-gray-900">Users</h3>
       </div>
       <div className="w-full mt-8 overflow-x-auto">
-        <table className="w-full text-left bg-white border border-collapse border-gray-300">
+        <table className="w-full text-left bg-white border border-collapse border-gray-300 text-gray-900">
           <thead className="bg-gray-200">
             <tr>
               <th className="p-2 border">Name</th>
@@ -24,7 +24,7 @@ const Users = () => {
           <tbody>
             {data?.customers.map((customer) => (
               <tr key={customer._id} className="border hover:bg-gray-50">
-                <td className="p-2 border">
+                <td className="p-2 border font-medium">
                   {customer.firstName} {customer.lastName}
                 </td>
                 <td className="p-2 border opacity-50">{customer.email}</td>

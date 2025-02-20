@@ -3,7 +3,6 @@ import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 
 export default function OrderTable() {
   const { data } = useGetAllOrders();
-  console.log(data);
 
   return (
     <div className="w-full overflow-x-auto max-container">
@@ -39,7 +38,9 @@ export default function OrderTable() {
                     #{order.orderNumber}
                   </td>
                   <td className="p-3 border">{order.name}</td>
-                  <td className="p-3 border">R{order.grandTotal}</td>
+                  <td className="p-3 border font-medium text-green-600">
+                    R{order.grandTotal}
+                  </td>
                   <td className={`p-3 text-[13px]  font-medium  border`}>
                     <span className={`px-2 py-1 rounded-2xl ${statusColor}`}>
                       {order.status}
