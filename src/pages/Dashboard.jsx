@@ -35,7 +35,7 @@ const Dashboard = () => {
         <div className="p-4 bg-white border border-r rounded-lg shadow">
           <p className="text-gray-600">Revenue</p>
           <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">
-            R{data?.totalRevenue}
+            R{Math.round(data?.totalRevenue)}
           </h2>
         </div>
       </div>

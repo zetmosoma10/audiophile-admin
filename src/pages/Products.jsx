@@ -18,7 +18,7 @@ const Products = () => {
                 <th className="p-3 border">Category</th>
                 <th className="p-3 border">Price</th>
                 <th className="p-3 border">Stock</th>
-                <th className="p-3 border">Actions</th>
+                <th className="p-3 border"></th>
               </tr>
             </thead>
             <tbody>
@@ -32,12 +32,9 @@ const Products = () => {
                     R{product.price}
                   </td>
                   <td className="p-3 border">{product.stock}</td>
-                  <td className="flex gap-2 p-3 border">
+                  <td className="p-2 font-medium text-center border">
                     <button className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800">
                       Edit
-                    </button>
-                    <button className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500">
-                      Delete
                     </button>
                   </td>
                 </tr>

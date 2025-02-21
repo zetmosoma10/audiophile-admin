@@ -43,9 +43,12 @@ const NavBar = () => {
         <div className="flex items-center space-x-2">
           <FaUserCircle size={30} />
           {user && (
-            <p className="pr-2 font-medium text-gray-900 border-r-2 opacity-70 border-r-gray-900">
+            <Link
+              to="profile"
+              className="pr-2 font-medium text-gray-900 border-r-2 opacity-70 border-r-gray-900"
+            >
               {user.firstName}
-            </p>
+            </Link>
           )}
           {user ? (
             <Link to="logout" className="font-semibold">

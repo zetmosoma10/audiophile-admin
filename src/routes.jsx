@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import RequireAuth from "./components/RequireAuth";
 import Register from "./pages/Register";
 import Logout from "./pages/Logout";
+import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
             path: "logout",
             element: <Logout />,
           },
+          {
+            path: "profile",
+            element: <Profile />,
+          },
         ],
       },
     ],
@@ -48,6 +54,10 @@ const router = createBrowserRouter([
   {
     path: "register",
     element: <Register />,
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
