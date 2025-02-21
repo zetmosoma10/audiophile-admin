@@ -9,6 +9,7 @@ import { useGetOrder } from "../hooks/useGetOrder";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 import NotFound from "./NotFound";
+import LoadingOrderSkeleton from "../skeletons/LoadingOrderSkeleton";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -22,11 +23,14 @@ const OrderDetails = () => {
 
   if (
     isError &&
-    error?.response &&
     error?.response?.status >= 400 &&
     error?.response?.status < 500
   ) {
     return navigate("*", { replace: true });
+  }
+
+  if (isCurrentOrderLoading) {
+    return <LoadingOrderSkeleton />;
   }
 
   const vat = currentOrder?.order?.vat * currentOrder?.order?.grandTotal;
