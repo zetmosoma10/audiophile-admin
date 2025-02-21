@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
 import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const { data, isLoading } = useGetAnalytics();
@@ -71,7 +72,7 @@ const Dashboard = () => {
                 }
 
                 return (
-                  <tr className="border hover:bg-gray-50">
+                  <tr key={order._id} className="border hover:bg-gray-50">
                     <td className="p-3 font-medium border">
                       #{order.orderNumber}
                     </td>
@@ -86,9 +87,12 @@ const Dashboard = () => {
                       {dayjs(order.createdAt).format("DD MMM YYYY")}
                     </td>
                     <td className="p-3 border">
-                      <button className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200">
+                      <Link
+                        to={`orders/${order._id}`}
+                        className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200"
+                      >
                         View
-                      </button>
+                      </Link>
                     </td>
                   </tr>
                 );

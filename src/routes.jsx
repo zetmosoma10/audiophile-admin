@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Logout from "./pages/Logout";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
+import OrderDetails from "./pages/OrderDetails";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
           {
             path: "orders",
             element: <Orders />,
+          },
+          {
+            path: "orders/:orderId",
+            element: <OrderDetails />,
           },
           {
             path: "products",

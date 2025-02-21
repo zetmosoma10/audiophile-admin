@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
+import { Link } from "react-router-dom";
 
 export default function OrderTable() {
   const { data: orders, isLoading: isOrdersLoading } = useGetAllOrders();
@@ -43,7 +44,7 @@ export default function OrderTable() {
                     </td>
                     <td className="p-3 border">{order.name}</td>
                     <td className="p-3 font-medium text-green-600 border">
-                      R{order.grandTotal}
+                      R{parseFloat(order.grandTotal.toFixed(2))}
                     </td>
                     <td className="p-3 text-[13px]  font-medium  border">
                       <span className={`px-2 py-1 rounded-2xl ${statusColor}`}>
@@ -55,9 +56,12 @@ export default function OrderTable() {
                     </td>
                     <td className="p-3 ">
                       <div className="flex gap-2">
-                        <button className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200">
+                        <Link
+                          to={`/orders/${order._id}`}
+                          className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200"
+                        >
                           View
-                        </button>
+                        </Link>
 
                         <button className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800">
                           Edit
