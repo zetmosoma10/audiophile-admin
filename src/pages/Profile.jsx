@@ -2,9 +2,14 @@ import dayjs from "dayjs";
 import { useGetCustomer } from "../hooks/useGetCustomer";
 import { Link } from "react-router-dom";
 import BackLink from "../components/BackLink";
+import LoadingProfileSkeleton from "../skeletons/LoadingProfileSkeleton";
 
 const Profile = () => {
-  const { data } = useGetCustomer();
+  const { data, isLoading } = useGetCustomer();
+
+  if (isLoading) {
+    return <LoadingProfileSkeleton />;
+  }
 
   return (
     <div className="max-container">
