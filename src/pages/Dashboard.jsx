@@ -1,9 +1,13 @@
 import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
+import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
 
 const Dashboard = () => {
-  const { data } = useGetAnalytics();
-  console.log(data);
+  const { data, isLoading } = useGetAnalytics();
+
+  if (isLoading) {
+    return <LoadingDashboardSkeleton />;
+  }
 
   return (
     <div className="min-h-screen text-gray-900 max-container">
@@ -49,7 +53,7 @@ const Dashboard = () => {
                 <th className="p-3 border">Customer</th>
                 <th className="p-3 border">Total</th>
                 <th className="p-3 border">Status</th>
-                <th className="p-3 border">Date</th>
+                <th className="p-3 border">Created</th>
                 <th className="p-3 border"></th>
               </tr>
             </thead>
