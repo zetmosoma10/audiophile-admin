@@ -2,12 +2,24 @@ import dayjs from "dayjs";
 import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import { Link } from "react-router-dom";
+import Modal from "../components/Modal";
+import { useState } from "react";
 
 export default function OrderTable() {
   const { data: orders, isLoading: isOrdersLoading } = useGetAllOrders();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="w-full overflow-x-auto max-container">
+      {isModalOpen && <Modal closeModal={closeModal} />}
       <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
       {isOrdersLoading ? (
         <LoadingTableSkeleton />
@@ -63,7 +75,10 @@ export default function OrderTable() {
                           View
                         </Link>
 
-                        <button className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800">
+                        <button
+                          onClick={openModal}
+                          className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
+                        >
                           Edit
                         </button>
                         <button className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500">
