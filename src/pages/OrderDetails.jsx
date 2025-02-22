@@ -6,10 +6,10 @@ import { MdOutlinePayment } from "react-icons/md";
 import dayjs from "dayjs";
 import BackLink from "../components/BackLink";
 import { useGetOrder } from "../hooks/useGetOrder";
+import LoadingOrderSkeleton from "../skeletons/LoadingOrderSkeleton";
+import UnExpectedError from "../components/UnExpectedError";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
-import NotFound from "./NotFound";
-import LoadingOrderSkeleton from "../skeletons/LoadingOrderSkeleton";
 
 const OrderDetails = () => {
   const { orderId } = useParams();
@@ -19,7 +19,12 @@ const OrderDetails = () => {
     isLoading: isCurrentOrderLoading,
     isError,
     error,
+    refetch,
   } = useGetOrder(orderId);
+
+  if (isCurrentOrderLoading) {
+    return <LoadingOrderSkeleton />;
+  }
 
   if (
     isError &&
@@ -29,8 +34,8 @@ const OrderDetails = () => {
     return navigate("*", { replace: true });
   }
 
-  if (isCurrentOrderLoading) {
-    return <LoadingOrderSkeleton />;
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return <UnExpectedError refetch={refetch} error={error} />;
   }
 
   const vat = currentOrder?.order?.vat * currentOrder?.order?.grandTotal;

@@ -2,12 +2,17 @@ import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
 import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
 import { Link } from "react-router-dom";
+import UnExpectedError from "../components/UnExpectedError";
 
 const Dashboard = () => {
-  const { data, isLoading } = useGetAnalytics();
+  const { data, isLoading, isError, error, refetch } = useGetAnalytics();
 
   if (isLoading) {
     return <LoadingDashboardSkeleton />;
+  }
+
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return <UnExpectedError refetch={refetch} error={error} />;
   }
 
   return (

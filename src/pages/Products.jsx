@@ -1,8 +1,19 @@
+import UnExpectedError from "../components/UnExpectedError";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 
 const Products = () => {
-  const { data: products, isLoading: isProductsLoading } = useGetAllProducts();
+  const {
+    data: products,
+    isLoading: isProductsLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetAllProducts();
+
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return <UnExpectedError refetch={refetch} error={error} />;
+  }
 
   return (
     <div className="w-full overflow-x-auto max-container">

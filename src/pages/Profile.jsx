@@ -3,12 +3,17 @@ import { useGetCustomer } from "../hooks/useGetCustomer";
 import { Link } from "react-router-dom";
 import BackLink from "../components/BackLink";
 import LoadingProfileSkeleton from "../skeletons/LoadingProfileSkeleton";
+import UnExpectedError from "../components/UnExpectedError";
 
 const Profile = () => {
-  const { data, isLoading } = useGetCustomer();
+  const { data, isLoading, isError, error, refetch } = useGetCustomer();
 
   if (isLoading) {
     return <LoadingProfileSkeleton />;
+  }
+
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return <UnExpectedError refetch={refetch} error={error} />;
   }
 
   return (

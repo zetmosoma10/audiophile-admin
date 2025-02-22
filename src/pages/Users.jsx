@@ -1,10 +1,20 @@
 import dayjs from "dayjs";
 import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
+import UnExpectedError from "../components/UnExpectedError";
 
 const Users = () => {
-  const { data: customers, isLoading: isCustomersLoading } =
-    useGetAllCustomers();
+  const {
+    data: customers,
+    isLoading: isCustomersLoading,
+    isError,
+    error,
+    refetch,
+  } = useGetAllCustomers();
+
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return <UnExpectedError refetch={refetch} error={error} />;
+  }
 
   return (
     <section className="max-container">
