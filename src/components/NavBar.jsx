@@ -1,32 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import SideBar from "./SideBar";
 import useAuthStore from "./../stores/authStore";
 import { jwtDecode } from "jwt-decode";
 
-const NavBar = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const location = useLocation();
+const NavBar = ({ openSidebar }) => {
   const { token } = useAuthStore();
 
   let user = null;
   if (token) {
     user = jwtDecode(token);
   }
-
-  const openSidebar = () => {
-    setIsSidebarOpen(true);
-  };
-
-  const closeSidebar = () => {
-    setIsSidebarOpen(false);
-  };
-
-  useEffect(() => {
-    closeSidebar();
-  }, [location.pathname]);
 
   return (
     <header className="bg-white border-b ">
@@ -61,17 +45,6 @@ const NavBar = () => {
           )}
         </div>
       </nav>
-      {isSidebarOpen && (
-        <div className="fixed inset-0 z-10 flex md:hidden">
-          <div
-            onClick={closeSidebar}
-            className="fixed inset-0 bg-black opacity-50"
-          ></div>
-          <div className="min-h-screen  w-[70%] sm:w-[50%] relative z-10 top-0 ">
-            <SideBar closeSidebar={closeSidebar} />
-          </div>
-        </div>
-      )}
     </header>
   );
 };
