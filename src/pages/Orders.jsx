@@ -1,23 +1,36 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
-import { Link } from "react-router-dom";
-import Modal from "../components/Modal";
-import { useState } from "react";
 import UnExpectedError from "../components/UnExpectedError";
+import UpdateOrderModal from "../components/modals/UpdateOrderModal";
+import DeleteOrderModal from "../components/modals/DeleteOrderModal";
 
 export default function OrderTable() {
-  const { data, isLoading, isError, error, refetch } = useGetAllOrders();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const { data, isLoading, isError, error, refetch } = useGetAllOrders();
 
-  const openModal = (order) => {
+  const openUpdateModal = (order) => {
     setOrderDetails(order);
-    setIsModalOpen(true);
+    setIsUpdateModalOpen(true);
+    setIsDeleteModalOpen(false);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+  };
+
+  const openDeleteModal = (order) => {
+    setOrderDetails(order);
+    setIsUpdateModalOpen(false);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
   };
 
   if (isError && (!error.response || error.response?.status >= 500)) {
@@ -28,7 +41,21 @@ export default function OrderTable() {
 
   return (
     <div className="w-full overflow-x-auto max-container">
-      {isModalOpen && <Modal order={orderDetails} closeModal={closeModal} />}
+      {/* MODALS */}
+      {isUpdateModalOpen && (
+        <UpdateOrderModal
+          order={orderDetails}
+          closeUpdateModal={closeUpdateModal}
+        />
+      )}
+
+      {isDeleteModalOpen && (
+        <DeleteOrderModal
+          order={orderDetails}
+          closeDeleteModal={closeDeleteModal}
+        />
+      )}
+      {/* END OF MODALS */}
       <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
       {isLoading ? (
         <LoadingTableSkeleton />
@@ -85,12 +112,15 @@ export default function OrderTable() {
                         </Link>
 
                         <button
-                          onClick={() => openModal(order)}
+                          onClick={() => openUpdateModal(order)}
                           className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
                         >
                           Edit
                         </button>
-                        <button className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500">
+                        <button
+                          onClick={() => openDeleteModal(order)}
+                          className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500"
+                        >
                           Delete
                         </button>
                       </div>
