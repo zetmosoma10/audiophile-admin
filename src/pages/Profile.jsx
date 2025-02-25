@@ -1,19 +1,35 @@
 import dayjs from "dayjs";
 import { useGetCustomer } from "../hooks/useGetCustomer";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BackLink from "../components/BackLink";
 import LoadingProfileSkeleton from "../skeletons/LoadingProfileSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
+import useAuthStore from "../stores/authStore";
 
 const Profile = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuthStore();
   const { data, isLoading, isError, error, refetch } = useGetCustomer();
 
   if (isLoading) {
     return <LoadingProfileSkeleton />;
   }
 
+  // * EXPECTED ERRORS
+  if (isError && error?.response?.status === 401) {
+    logout();
+
+    return navigate("/login", {
+      state: { from: location, message: "You should login first" },
+    });
+  }
+
+  // * UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
-    return <UnExpectedError refetch={refetch} error={error} />;
+    return (
+      <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
+    );
   }
 
   return (

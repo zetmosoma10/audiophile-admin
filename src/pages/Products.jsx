@@ -1,8 +1,13 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import UnExpectedError from "../components/UnExpectedError";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
+import useAuthStore from "../stores/authStore";
 
 const Products = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuthStore();
   const {
     data: products,
     isLoading: isProductsLoading,
@@ -11,6 +16,16 @@ const Products = () => {
     refetch,
   } = useGetAllProducts();
 
+  // * EXPECTED ERRORS
+  if (isError && error?.response?.status === 401) {
+    logout();
+
+    return navigate("/login", {
+      state: { from: location, message: "You should login first" },
+    });
+  }
+
+  // * UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
     return <UnExpectedError refetch={refetch} error={error} />;
   }

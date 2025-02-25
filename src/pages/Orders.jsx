@@ -4,12 +4,15 @@ import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import { Link } from "react-router-dom";
 import Modal from "../components/Modal";
 import { useState } from "react";
+import UnExpectedError from "../components/UnExpectedError";
 
 export default function OrderTable() {
-  const { data: orders, isLoading: isOrdersLoading } = useGetAllOrders();
+  const { data, isLoading, isError, error, refetch } = useGetAllOrders();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [orderDetails, setOrderDetails] = useState(null);
 
-  const openModal = () => {
+  const openModal = (order) => {
+    setOrderDetails(order);
     setIsModalOpen(true);
   };
 
@@ -17,11 +20,17 @@ export default function OrderTable() {
     setIsModalOpen(false);
   };
 
+  if (isError && (!error.response || error.response?.status >= 500)) {
+    return (
+      <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
+    );
+  }
+
   return (
     <div className="w-full overflow-x-auto max-container">
-      {isModalOpen && <Modal closeModal={closeModal} />}
+      {isModalOpen && <Modal order={orderDetails} closeModal={closeModal} />}
       <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
-      {isOrdersLoading ? (
+      {isLoading ? (
         <LoadingTableSkeleton />
       ) : (
         <div className="mt-8 overflow-x-auto">
@@ -37,7 +46,7 @@ export default function OrderTable() {
               </tr>
             </thead>
             <tbody>
-              {orders?.orders.map((order) => {
+              {data?.orders?.map((order) => {
                 let statusColor = "";
                 if (order.status === "pending") {
                   statusColor = "bg-green-300 text-green-700";
@@ -76,7 +85,7 @@ export default function OrderTable() {
                         </Link>
 
                         <button
-                          onClick={openModal}
+                          onClick={() => openModal(order)}
                           className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
                         >
                           Edit

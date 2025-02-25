@@ -12,7 +12,9 @@ const Dashboard = () => {
   }
 
   if (isError && (!error.response || error.response?.status >= 500)) {
-    return <UnExpectedError refetch={refetch} error={error} />;
+    return (
+      <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
+    );
   }
 
   return (

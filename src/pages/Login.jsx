@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/loginSchema";
 import { useLogin } from "../hooks/useLogin";
-import { toast } from "react-toastify";
 import Input from "../components/Input";
 
 const Login = () => {
@@ -19,7 +18,6 @@ const Login = () => {
   const { mutate, isPending, isError, error } = useLogin();
 
   const onSubmit = (data) => {
-    // const prevPage = location.state?.from?.pathname || "/";
     if (location.state) {
       location.state.message = null;
     }
@@ -31,8 +29,6 @@ const Login = () => {
       },
     });
   };
-
-  const message = location.state?.message || null;
 
   return (
     <div className="py-10 md:py-16 large_tablet:py-20 bg-slate-50">
@@ -51,16 +47,19 @@ const Login = () => {
               </Link>
             </p>
           </div>
+
           {isError && error.status >= 400 && error.status < 500 && (
             <p className="mt-4 text-lg font-semibold text-center text-red-500 ">
               {error?.response.data.message}
             </p>
           )}
-          {/* {message && (
-            <p className="mt-4 text-lg font-semibold text-center text-red-500">
-              {message}
+
+          {location?.state?.message ? (
+            <p className="mt-4 text-lg font-semibold text-center text-red-500 ">
+              {location.state.message}
             </p>
-          )} */}
+          ) : null}
+
           <form onSubmit={handleSubmit(onSubmit)} className="mt-7" noValidate>
             <div className="grid gap-y-4">
               <Input

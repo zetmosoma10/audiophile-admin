@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { GoListUnordered } from "react-icons/go";
 import { MdLocalShipping } from "react-icons/md";
 import { FaAddressBook } from "react-icons/fa";
@@ -8,34 +8,49 @@ import BackLink from "../components/BackLink";
 import { useGetOrder } from "../hooks/useGetOrder";
 import LoadingOrderSkeleton from "../skeletons/LoadingOrderSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
+import useAuthStore from "../stores/authStore";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const OrderDetails = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuthStore();
+
   const {
     data: currentOrder,
-    isLoading: isCurrentOrderLoading,
+    isLoading,
     isError,
     error,
     refetch,
   } = useGetOrder(orderId);
 
-  if (isCurrentOrderLoading) {
+  if (isLoading) {
     return <LoadingOrderSkeleton />;
+  }
+
+  // * EXPECTED ERRORS
+  if (isError && error?.response?.status === 401) {
+    logout();
+
+    return navigate("/login", {
+      state: { from: location, message: "You should login first" },
+    });
   }
 
   if (
     isError &&
-    error?.response?.status >= 400 &&
-    error?.response?.status < 500
+    (error?.response?.status === 400 || error?.response?.status === 404)
   ) {
     return navigate("*", { replace: true });
   }
 
+  // * UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
-    return <UnExpectedError refetch={refetch} error={error} />;
+    return (
+      <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
+    );
   }
 
   const vat = currentOrder?.order?.vat * currentOrder?.order?.grandTotal;

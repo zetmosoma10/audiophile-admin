@@ -1,19 +1,31 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
+import useAuthStore from "../stores/authStore";
 
 const Users = () => {
-  const {
-    data: customers,
-    isLoading: isCustomersLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetAllCustomers();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuthStore();
 
+  const { data, isLoading, isError, error, refetch } = useGetAllCustomers();
+
+  // ! EXPECTED ERRORS
+  if (isError && error?.response?.status === 401) {
+    logout();
+
+    return navigate("/login", {
+      state: { from: location, message: "You should login first" },
+    });
+  }
+
+  // ! UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
-    return <UnExpectedError refetch={refetch} error={error} />;
+    return (
+      <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
+    );
   }
 
   return (
@@ -21,7 +33,7 @@ const Users = () => {
       <div className="max-container md:mx-0 max-w-0">
         <h3 className="text-3xl font-semibold text-gray-900">Users</h3>
       </div>
-      {isCustomersLoading ? (
+      {isLoading ? (
         <LoadingTableSkeleton />
       ) : (
         <div className="w-full mt-8 overflow-x-auto ">
@@ -36,7 +48,7 @@ const Users = () => {
               </tr>
             </thead>
             <tbody>
-              {customers?.customers.map((customer) => (
+              {data?.customers.map((customer) => (
                 <tr key={customer._id} className="border hover:bg-gray-50">
                   <td className="p-2 font-medium border">
                     {customer.firstName} {customer.lastName}
