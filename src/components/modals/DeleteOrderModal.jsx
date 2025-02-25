@@ -1,7 +1,25 @@
+import { toast } from "react-toastify";
+import { useDeleteOrder } from "../../hooks/useDeleteOrder";
 import Modal from "./Modal";
 
 const DeleteOrderModal = ({ closeDeleteModal, order }) => {
-  const isPending = false;
+  const { mutate, isPending } = useDeleteOrder();
+
+  const handleMutation = () => {
+    mutate(order, {
+      onSuccess: (data) => closeDeleteModal(),
+      onError: (error) => {
+        if (
+          error?.response?.status === 400 ||
+          error?.response?.status === 404
+        ) {
+          toast.error(error.response.data.message);
+          setServerError(error.response.data.message);
+        }
+      },
+    });
+  };
+
   return (
     <Modal closeModal={closeDeleteModal}>
       <div>
@@ -20,6 +38,7 @@ const DeleteOrderModal = ({ closeDeleteModal, order }) => {
           </button>
           <button
             disabled={isPending}
+            onClick={handleMutation}
             className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-500"
           >
             {isPending ? "Deleting..." : "Delete"}
