@@ -34,9 +34,9 @@ const Input = ({
       </div>
       <div className="relative">
         <input
-          className={`w-full border rounded-lg pb-[19px] pt-[18px] pr-10 font-semibold text-sm tracking-[-0.25px] indent-6 caret-ORANGE focus:ring-1 focus:ring-ORANGE focus:outline-none placeholder:font-semibold ${
+          className={`w-full border rounded-lg pb-[19px] pt-[18px] pr-10 font-semibold text-sm tracking-[-0.25px] indent-6 caret-indigo-600 focus:ring-2 focus:ring-indigo-600 focus:outline-none placeholder:font-semibold ${
             errors?.message
-              ? "border-red-500 ring-1 ring-red-500"
+              ? "border-red-500 focus:border-none focus:ring-2 focus:ring-red-500 focus:outline-none"
               : "border-gray-300"
           }`}
           type={inputType}

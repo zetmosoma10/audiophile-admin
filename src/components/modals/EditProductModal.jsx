@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useUpdateProduct } from "../../hooks/useUpdateProduct";
 import Modal from "./Modal";
 import Input from "./../Input";
+import Button from "../Button";
 
 const schema = z.object({
   price: z.coerce.number().min(1, "Price must be at least 1"),
@@ -70,14 +71,14 @@ const EditProductModal = ({ closeProductModal, product }) => {
             />
             <div>
               <label
-                htmlFor="status"
-                className="block text-sm font-medium text-gray-700"
+                htmlFor="discount"
+                className="font-bold text-[12px] tracking-[0.21px] "
               >
                 Discount
               </label>
               <select
                 {...register("discount")}
-                className="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="block w-full indent-6 pb-[19px] pt-[18px] font-semibold text-sm mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
                 {["0", "15", "25", "40", "50"].map((val) => (
                   <option key={val} value={val}>
@@ -88,19 +89,19 @@ const EditProductModal = ({ closeProductModal, product }) => {
             </div>
           </div>
           <div className="flex items-center justify-end mt-5 space-x-3">
-            <button
+            <Button
               onClick={closeProductModal}
-              className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-500"
+              className="btn-small btn-danger"
             >
               Cancel
-            </button>
+            </Button>
 
-            <button
+            <Button
               disabled={isPending || Object.keys(dirtyFields).length === 0}
-              className="px-3 py-1 text-white bg-gray-900 rounded-md hover:bg-gray-800 disabled:bg-gray-700 disabled:cursor-not-allowed"
+              className="btn-small btn-dark"
             >
               {isPending ? "Submit..." : "Submit"}
-            </button>
+            </Button>
           </div>
         </form>
       </div>

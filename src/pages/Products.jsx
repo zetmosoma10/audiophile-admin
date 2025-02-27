@@ -5,6 +5,10 @@ import UnExpectedError from "../components/UnExpectedError";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import useAuthStore from "../stores/authStore";
 import EditProductModal from "../components/modals/EditProductModal";
+import Button from "../components/Button";
+import TableRow from "../components/table/TableRow";
+import TableCell from "../components/table/TableCell";
+import Table from "../components/table/Table";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -12,13 +16,7 @@ const Products = () => {
   const { logout } = useAuthStore();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [product, setProduct] = useState(null);
-  const {
-    data: products,
-    isLoading: isProductsLoading,
-    isError,
-    error,
-    refetch,
-  } = useGetAllProducts();
+  const { data, isLoading, isError, error, refetch } = useGetAllProducts();
 
   const openProductModal = (product) => {
     setProduct(product);
@@ -52,46 +50,47 @@ const Products = () => {
         />
       )}
       <h2 className="text-3xl font-semibold">Products</h2>
-      {isProductsLoading ? (
+      {isLoading ? (
         <LoadingTableSkeleton />
       ) : (
-        <div className="mt-8 overflow-x-auto">
-          <table className="w-full min-w-[700px] border-collapse border border-gray-200 text-left bg-white text-gray-900">
-            <thead className="bg-gray-100">
-              <tr>
-                <th className="p-3 border">Product Name</th>
-                <th className="p-3 border">Category</th>
-                <th className="p-3 border">Price</th>
-                <th className="p-3 border">Stock</th>
-                <th className="p-3 border">Discount</th>
-                <th className="p-3 border"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {products?.products.map((product) => (
-                <tr key={product._id} className="border hover:bg-gray-50">
-                  <td className="p-3 font-medium border">{product.name}</td>
-                  <td className="p-3 capitalize border">
-                    {product.category.name}
-                  </td>
-                  <td className="p-3 font-medium text-green-600 border">
-                    R{product.price}
-                  </td>
-                  <td className="p-3 border">{product.stock}</td>
-                  <td className="p-3 border">{product.discount}</td>
-                  <td className="p-2 font-medium text-center border">
-                    <button
-                      onClick={() => openProductModal(product)}
-                      className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
-                    >
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <Table
+          columns={[
+            "Product Name",
+            "Category",
+            "Price",
+            "Stock",
+            "Discount (%)",
+            "",
+          ]}
+          data={data?.products}
+          renderRow={(row, index) => (
+            <TableRow key={index}>
+              <TableCell className="font-medium">{row.name}</TableCell>
+              <TableCell className="font-medium capitalize">
+                {row.category.name}
+              </TableCell>
+              <TableCell className="font-medium text-green-500">
+                {row.price}
+              </TableCell>
+              <TableCell
+                className={`${
+                  row.stock >= 10 ? "text-indigo-500" : "text-red-500"
+                }`}
+              >
+                {row.stock}
+              </TableCell>
+              <TableCell className="font-medium">{row.discount}</TableCell>
+              <TableCell>
+                <Button
+                  onClick={() => openProductModal(row)}
+                  className="btn-small btn-dark"
+                >
+                  Edit
+                </Button>
+              </TableCell>
+            </TableRow>
+          )}
+        />
       )}
     </div>
   );

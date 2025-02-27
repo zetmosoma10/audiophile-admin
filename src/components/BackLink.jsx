@@ -5,7 +5,7 @@ const BackLink = ({ className }) => {
   return (
     <button
       onClick={() => navigate(-1)}
-      className={`text-base font-medium text-gray-900 opacity-50 hover:text-ORANGE focus:text-ORANGE focus:outline-none ${className} `}
+      className={`text-base font-medium text-gray-900 opacity-50 hover:font-bold focus:text-ORANGE focus:outline-none ${className} `}
     >
       Go Back
     </button>

@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/loginSchema";
 import { useLogin } from "../hooks/useLogin";
 import Input from "../components/Input";
+import Button from "../components/Button";
 
 const Login = () => {
   const {
@@ -40,7 +41,7 @@ const Login = () => {
               Don't have an account yet?
               <Link
                 to="/register"
-                className="font-medium text-ORANGE decoration-2 hover:underline focus:outline-none focus:underline "
+                className="font-medium text-indigo-600 decoration-2 hover:underline focus:outline-none focus:underline "
               >
                 {" "}
                 Sign up here
@@ -79,15 +80,13 @@ const Login = () => {
               <div className="text-end">
                 <Link
                   to="/forgotPassword"
-                  className="text-sm font-medium text-ORANGE gap-x-1 decoration-2 hover:underline focus:outline-none focus:underline "
+                  className="text-sm font-medium text-indigo-600 gap-x-1 decoration-2 hover:underline focus:outline-none focus:underline "
                 >
                   Forgot password?
                 </Link>
               </div>
-              <button
-                className="inline-flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white border border-transparent rounded-lg bg-ORANGE gap-x-2 hover:bg-LIGHT_ORANGE focus:outline-none focus:bg-ORANGE disabled:opacity-50 disabled:pointer-events-none"
-                disabled={isPending}
-              >
+
+              <Button className="btn-primary btn-large" disabled={isPending}>
                 {isPending ? (
                   <div
                     className="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-gray-50 rounded-full "
@@ -99,7 +98,7 @@ const Login = () => {
                 ) : (
                   "Sign in"
                 )}
-              </button>
+              </Button>
             </div>
           </form>
         </div>

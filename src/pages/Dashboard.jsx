@@ -1,9 +1,14 @@
 import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
 import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";
+import Table from "../components/table/Table";
+import TableRow from "../components/table/TableRow";
+import TableCell from "../components/table/TableCell";
+import Button from "../components/Button";
+import Analytics from "../components/Analytics";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -36,92 +41,63 @@ const Dashboard = () => {
       <h1 className="mb-6 text-3xl font-bold">Admin Dashboard</h1>
       {/* Summary Cards */}
       <div className="grid grid-cols-1 gap-6 mb-6 sm:grid-cols-2 large_tablet:grid-cols-4">
-        <div className="p-4 bg-white border border-r rounded-lg shadow">
-          <p className="text-gray-600">Total Orders</p>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-teal-500">
-            {data?.totalOrders}
-          </h2>
-        </div>
-        <div className="p-4 bg-white border border-r rounded-lg shadow">
-          <p className="text-gray-600">Total Users</p>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500">
-            {data?.totalCustomers}
-          </h2>
-        </div>
-        <div className="p-4 bg-white border border-r rounded-lg shadow">
-          <p className="text-gray-600">Total Products</p>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-red-500">
-            {data?.totalProducts}
-          </h2>
-        </div>
-        <div className="p-4 bg-white border border-r rounded-lg shadow">
-          <p className="text-gray-600">Revenue</p>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">
-            R{Math.round(data?.totalRevenue)}
-          </h2>
-        </div>
+        <Analytics name="Total Orders" total={data?.totalOrders} />
+        <Analytics name="Total Users" total={data?.totalCustomers} />
+        <Analytics name="Total Products" total={data?.totalProducts} />
+        <Analytics name="Revenue" total={data?.totalRevenue} />
       </div>
 
       {/* Recent Orders Table */}
-      {data?.latestOrders.length === 0 ? (
-        <p className="text-xl font-bold text-gray-900">No Orders in Database</p>
-      ) : (
-        <div className="p-4 overflow-x-auto bg-white rounded-lg shadow">
-          <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
-          <table className="w-full text-left border border-collapse border-gray-300">
-            <thead className="bg-gray-200">
-              <tr>
-                <th className="p-3 border">Order ID</th>
-                <th className="p-3 border">Customer</th>
-                <th className="p-3 border">Total</th>
-                <th className="p-3 border">Status</th>
-                <th className="p-3 border">Created</th>
-                <th className="p-3 border"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {data?.latestOrders.map((order) => {
-                let statusColor = "";
-                if (order.status === "pending") {
-                  statusColor = "bg-green-300 text-green-700";
-                } else if (order.status === "shipped") {
-                  statusColor = "bg-orange-300 text-orange-700";
-                } else if (order.status === "delivered") {
-                  statusColor = "bg-blue-300 text-blue-700";
-                } else if (order.status === "cancelled") {
-                  statusColor = "bg-red-300 text-red-700";
-                }
+      <div className="p-4 overflow-x-auto bg-white rounded-lg shadow">
+        <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
+        <Table
+          columns={["Order ID", "Total", "Customer", "Status", "Created", ""]}
+          data={data?.latestOrders}
+          renderRow={(order, index) => {
+            let statusColor = "";
+            if (order.status === "pending") {
+              statusColor = "bg-green-300 text-green-700";
+            } else if (order.status === "shipped") {
+              statusColor = "bg-orange-300 text-orange-700";
+            } else if (order.status === "delivered") {
+              statusColor = "bg-blue-300 text-blue-700";
+            } else if (order.status === "cancelled") {
+              statusColor = "bg-red-300 text-red-700";
+            }
 
-                return (
-                  <tr key={order._id} className="border hover:bg-gray-50">
-                    <td className="p-3 font-medium border">
-                      #{order.orderNumber}
-                    </td>
-                    <td className="p-3 border">{order.name}</td>
-                    <td className="p-3 border">R{order.grandTotal}</td>
-                    <td className="p-3 text-[13px]  font-medium  border">
-                      <span className={`px-2 py-1 rounded-2xl ${statusColor}`}>
-                        {order.status}
-                      </span>
-                    </td>
-                    <td className="p-3 border opacity-50">
-                      {dayjs(order.createdAt).format("DD MMM YYYY")}
-                    </td>
-                    <td className="p-3 border">
-                      <Link
-                        to={`orders/${order._id}`}
-                        className="py-1 px-2 text-[13px] text-gray-900 border rounded-md hover:bg-slate-200"
-                      >
-                        View
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
+            return (
+              <TableRow key={index}>
+                <TableCell className="font-medium">
+                  #{order.orderNumber}
+                </TableCell>
+                <TableCell className="capitalize">{order.name}</TableCell>
+                <TableCell className="font-medium text-green-500">
+                  R{parseFloat(order.grandTotal.toFixed(2))}
+                </TableCell>
+                <TableCell className="p-3 text-[13px]  font-medium  border">
+                  <span className={`px-2 py-1 rounded-2xl ${statusColor}`}>
+                    {order.status}
+                  </span>
+                </TableCell>
+                <TableCell className="opacity-50">
+                  {dayjs(order.createdAt).format("DD MMM YYYY")}
+                </TableCell>
+                <TableCell className="p-3">
+                  <div className="flex gap-2">
+                    <Button
+                      type="link"
+                      to={`/orders/${order._id}`}
+                      className="btn-small btn-outline"
+                    >
+                      View
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>
+            );
+          }}
+        />
+      </div>
     </div>
   );
 };

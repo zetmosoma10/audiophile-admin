@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUpdateOrderStatus } from "../../hooks/useUpdateOrderStatus";
 import Modal from "./Modal";
+import Button from "../Button";
 
 const UpdateOrderModal = ({ closeUpdateModal, order }) => {
   const {
@@ -47,34 +48,32 @@ const UpdateOrderModal = ({ closeUpdateModal, order }) => {
           <div>
             <label
               htmlFor="status"
-              className="block text-sm font-medium text-gray-700"
+              className="font-bold text-[12px] tracking-[0.21px] "
             >
               Status
             </label>
             <select
               {...register("status")}
-              className="block w-full px-4 py-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="block w-full indent-3 pb-[14px] pt-[15px] font-semibold text-sm mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
             >
-              <option value="pending">Pending</option>
-              <option value="shipped">Shipped</option>
-              <option value="delivered">Delivered</option>
-              <option value="cancelled">Cancelled</option>
+              {["pending", "shipped", "delivered", "cancelled"].map((val) => (
+                <option key={val} value={val}>
+                  {val}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex items-center justify-end mt-5 space-x-3">
-            <button
-              onClick={closeUpdateModal}
-              className="px-3 py-1 text-white bg-red-600 rounded-md hover:bg-red-500"
-            >
+            <Button onClick={closeUpdateModal} className="btn-small btn-danger">
               Cancel
-            </button>
+            </Button>
 
-            <button
+            <Button
               disabled={isDirty || isPending}
-              className="px-3 py-1 text-white bg-gray-900 rounded-md hover:bg-gray-800 disabled:bg-gray-700 disabled:cursor-not-allowed"
+              className="btn-small btn-dark"
             >
               {isPending ? "Submit..." : "Submit"}
-            </button>
+            </Button>
           </div>
         </div>
       </form>
