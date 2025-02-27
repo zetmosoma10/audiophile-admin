@@ -34,7 +34,7 @@ const Input = ({
       </div>
       <div className="relative">
         <input
-          className={`w-full border border-LIGHT_GREY rounded-lg pb-[19px] pt-[18px] pr-10 font-semibold text-sm tracking-[-0.25px] indent-6 caret-ORANGE focus:ring-1 focus:ring-ORANGE focus:outline-none placeholder:font-semibold ${
+          className={`w-full border rounded-lg pb-[19px] pt-[18px] pr-10 font-semibold text-sm tracking-[-0.25px] indent-6 caret-ORANGE focus:ring-1 focus:ring-ORANGE focus:outline-none placeholder:font-semibold ${
             errors?.message
               ? "border-red-500 ring-1 ring-red-500"
               : "border-gray-300"
@@ -43,7 +43,7 @@ const Input = ({
           id={id}
           name={id}
           placeholder={placeholder}
-          {...register(id)}
+          {...register(id, { valueAsNumber: type === "number" })}
         />
         {type === "password" && (
           <div

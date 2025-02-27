@@ -136,11 +136,13 @@ export default function OrderTable() {
                             </Link>
 
                             <button
+                              disabled={order.status === "delivered"}
                               onClick={() => openUpdateModal(order)}
-                              className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
+                              className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800 disabled:bg-gray-700 disabled:cursor-not-allowed"
                             >
                               Edit
                             </button>
+
                             <button
                               onClick={() => openDeleteModal(order)}
                               className="py-1 px-2 text-[13px] text-white rounded-md bg-red-600 hover:bg-red-500"

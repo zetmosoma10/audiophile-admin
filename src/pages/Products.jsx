@@ -1,13 +1,17 @@
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import UnExpectedError from "../components/UnExpectedError";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
+import UnExpectedError from "../components/UnExpectedError";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import useAuthStore from "../stores/authStore";
+import EditProductModal from "../components/modals/EditProductModal";
 
 const Products = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { logout } = useAuthStore();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [product, setProduct] = useState(null);
   const {
     data: products,
     isLoading: isProductsLoading,
@@ -15,6 +19,15 @@ const Products = () => {
     error,
     refetch,
   } = useGetAllProducts();
+
+  const openProductModal = (product) => {
+    setProduct(product);
+    setIsEditModalOpen(true);
+  };
+
+  const closeProductModal = () => {
+    setIsEditModalOpen(false);
+  };
 
   // ! EXPECTED ERRORS
   if (isError && error?.response?.status === 401) {
@@ -32,6 +45,12 @@ const Products = () => {
 
   return (
     <div className="w-full overflow-x-auto max-container">
+      {isEditModalOpen && (
+        <EditProductModal
+          product={product}
+          closeProductModal={closeProductModal}
+        />
+      )}
       <h2 className="text-3xl font-semibold">Products</h2>
       {isProductsLoading ? (
         <LoadingTableSkeleton />
@@ -44,6 +63,7 @@ const Products = () => {
                 <th className="p-3 border">Category</th>
                 <th className="p-3 border">Price</th>
                 <th className="p-3 border">Stock</th>
+                <th className="p-3 border">Discount</th>
                 <th className="p-3 border"></th>
               </tr>
             </thead>
@@ -58,8 +78,12 @@ const Products = () => {
                     R{product.price}
                   </td>
                   <td className="p-3 border">{product.stock}</td>
+                  <td className="p-3 border">{product.discount}</td>
                   <td className="p-2 font-medium text-center border">
-                    <button className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800">
+                    <button
+                      onClick={() => openProductModal(product)}
+                      className="py-1 px-2 text-[13px] text-white rounded-md bg-gray-900 hover:bg-gray-800"
+                    >
                       Edit
                     </button>
                   </td>
