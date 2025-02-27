@@ -16,7 +16,7 @@ const Products = () => {
     refetch,
   } = useGetAllProducts();
 
-  // * EXPECTED ERRORS
+  // ! EXPECTED ERRORS
   if (isError && error?.response?.status === 401) {
     logout();
 
@@ -25,7 +25,7 @@ const Products = () => {
     });
   }
 
-  // * UNEXPECTED ERRORS
+  // ! UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
     return <UnExpectedError refetch={refetch} error={error} />;
   }

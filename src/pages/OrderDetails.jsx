@@ -30,7 +30,7 @@ const OrderDetails = () => {
     return <LoadingOrderSkeleton />;
   }
 
-  // * EXPECTED ERRORS
+  // ! EXPECTED ERRORS
   if (isError && error?.response?.status === 401) {
     logout();
 
@@ -46,7 +46,7 @@ const OrderDetails = () => {
     return navigate("*", { replace: true });
   }
 
-  // * UNEXPECTED ERRORS
+  // ! UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
     return (
       <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />

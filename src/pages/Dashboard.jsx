@@ -1,16 +1,30 @@
 import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
 import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import UnExpectedError from "../components/UnExpectedError";
+import useAuthStore from "../stores/authStore";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { logout } = useAuthStore();
   const { data, isLoading, isError, error, refetch } = useGetAnalytics();
 
   if (isLoading) {
     return <LoadingDashboardSkeleton />;
   }
 
+  // ! EXPECTED ERRORS
+  if (isError && error?.response?.status === 401) {
+    logout();
+
+    return navigate("/login", {
+      state: { from: location, message: "You should login first" },
+    });
+  }
+
+  // ! UNEXPECTED ERRORS
   if (isError && (!error.response || error.response?.status >= 500)) {
     return (
       <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
@@ -50,7 +64,7 @@ const Dashboard = () => {
 
       {/* Recent Orders Table */}
       {data?.latestOrders.length === 0 ? (
-        <p>No Orders in Database</p>
+        <p className="text-xl font-bold text-gray-900">No Orders in Database</p>
       ) : (
         <div className="p-4 overflow-x-auto bg-white rounded-lg shadow">
           <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
