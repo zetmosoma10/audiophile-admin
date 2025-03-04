@@ -5,19 +5,19 @@ import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import UpdateOrderModal from "../components/modals/UpdateOrderModal";
-import DeleteOrderModal from "../components/modals/DeleteOrderModal";
 import useAuthStore from "../stores/authStore";
 import Button from "../components/Button";
 import Table from "../components/table/Table";
 import TableRow from "../components/table/TableRow";
 import TableCell from "../components/table/TableCell";
+import DeleteModal from "../components/modals/DeleteModal";
 
 export default function OrderTable() {
-  const { logout } = useAuthStore();
   const [orderDetails, setOrderDetails] = useState(null);
-  const [searchParams, setSearchParams] = useSearchParams();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { logout } = useAuthStore();
 
   const status = searchParams.get("status") || "all";
   const { data, isLoading, isError, error, refetch } = useGetAllOrders(status);
@@ -44,6 +44,7 @@ export default function OrderTable() {
   };
   // * -- END OF MODAL DISPLAY LOGIN
 
+  // * UPDATE SEARCH PARAMS
   const handleSearchParams = (event) => {
     const newStatus = event.target.value;
     if (newStatus === "all") {
@@ -79,18 +80,16 @@ export default function OrderTable() {
       )}
 
       {isDeleteModalOpen && (
-        <DeleteOrderModal
-          order={orderDetails}
-          closeDeleteModal={closeDeleteModal}
-        />
+        <DeleteModal order={orderDetails} closeDeleteModal={closeDeleteModal} />
       )}
+
       {/* END OF MODALS */}
       <div className="flex items-start justify-between">
         <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
         <select
           onChange={handleSearchParams}
           value={status}
-          className=" font-semibold text-base py-2 px-3 m-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+          className="px-3 py-2 m-1 text-base font-semibold bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
           <option value="all">choose status</option>
           {["pending", "shipped", "delivered", "cancelled"].map((val) => (

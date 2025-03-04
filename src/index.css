@@ -30,7 +30,7 @@ body {
   }
 
   .btn-danger {
-    @apply text-white bg-red-600 hover:bg-red-500;
+    @apply text-white bg-red-600 hover:bg-red-500 disabled:bg-red-400;
   }
 
   .btn-outline {
