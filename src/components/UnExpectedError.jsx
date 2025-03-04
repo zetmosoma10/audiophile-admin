@@ -18,7 +18,7 @@ const UnExpectedError = ({ error, refetch, isLoading }) => {
         <Button
           disabled={isLoading}
           onClick={refetch}
-          className="py-2 mx-auto mt-2 btn-primary"
+          className="py-2 px-3 rounded-lg mx-auto mt-2 btn-primary"
         >
           {isLoading ? "Reload..." : "Reload"}
         </Button>

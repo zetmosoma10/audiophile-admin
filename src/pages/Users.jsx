@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import dayjs from "dayjs";
 import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -10,8 +10,6 @@ import TableCell from "../components/table/TableCell";
 import Button from "../components/Button";
 
 const Users = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
 
   const { data, isLoading, isError, error, refetch } = useGetAllCustomers();
@@ -20,9 +18,7 @@ const Users = () => {
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   // ! UNEXPECTED ERRORS

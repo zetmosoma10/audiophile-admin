@@ -1,14 +1,12 @@
 import dayjs from "dayjs";
 import { useGetCustomer } from "../hooks/useGetCustomer";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import BackLink from "../components/BackLink";
 import LoadingProfileSkeleton from "../skeletons/LoadingProfileSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";
 
 const Profile = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
   const { data, isLoading, isError, error, refetch } = useGetCustomer();
 
@@ -20,9 +18,7 @@ const Profile = () => {
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   // ! UNEXPECTED ERRORS
@@ -45,13 +41,13 @@ const Profile = () => {
           </h3>
           <p className="text-gray-600">
             Email:{" "}
-            <Link className="text-ORANGE hover:underline" to="#">
+            <Link className="text-indigo-600 hover:underline" to="#">
               {data?.customer?.email}
             </Link>
           </p>
           <p className="text-gray-600">
             CreatedAt:{" "}
-            <span className="text-ORANGE">
+            <span className="text-indigo-600">
               {dayjs(data?.customer?.createdAt).format("DD MMM YYYY")}
             </span>
           </p>

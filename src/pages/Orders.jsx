@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate, useSearchParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -13,13 +13,14 @@ import TableRow from "../components/table/TableRow";
 import TableCell from "../components/table/TableCell";
 
 export default function OrderTable() {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
   const [orderDetails, setOrderDetails] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const { data, isLoading, isError, error, refetch } = useGetAllOrders();
+
+  const status = searchParams.get("status") || "all";
+  const { data, isLoading, isError, error, refetch } = useGetAllOrders(status);
 
   // * -- HANDLING MODAL DISPLAY LOGIN
   const openUpdateModal = (order) => {
@@ -43,17 +44,25 @@ export default function OrderTable() {
   };
   // * -- END OF MODAL DISPLAY LOGIN
 
+  const handleSearchParams = (event) => {
+    const newStatus = event.target.value;
+    if (newStatus === "all") {
+      searchParams.delete("status");
+      setSearchParams(searchParams, { replace: true });
+    } else {
+      setSearchParams({ status: newStatus }, { replace: true });
+    }
+  };
+
   // ! EXPECTED ERRORS
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   // ! UNEXPECTED ERRORS
-  if (isError && (!error.response || error.response?.status >= 500)) {
+  if (isError && (!error?.response || error.response.status >= 500)) {
     return (
       <UnExpectedError refetch={refetch} error={error} isLoading={isLoading} />
     );
@@ -76,7 +85,21 @@ export default function OrderTable() {
         />
       )}
       {/* END OF MODALS */}
-      <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
+      <div className="flex items-start justify-between">
+        <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
+        <select
+          onChange={handleSearchParams}
+          value={status}
+          className=" font-semibold text-base py-2 px-3 m-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
+        >
+          <option value="all">choose status</option>
+          {["pending", "shipped", "delivered", "cancelled"].map((val) => (
+            <option key={val} value={val}>
+              {val}
+            </option>
+          ))}
+        </select>
+      </div>
       {isLoading ? (
         <LoadingTableSkeleton />
       ) : (

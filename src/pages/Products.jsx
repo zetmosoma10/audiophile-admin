@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
 import UnExpectedError from "../components/UnExpectedError";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -11,8 +11,6 @@ import TableCell from "../components/table/TableCell";
 import Table from "../components/table/Table";
 
 const Products = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [product, setProduct] = useState(null);
@@ -31,9 +29,7 @@ const Products = () => {
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   // ! UNEXPECTED ERRORS

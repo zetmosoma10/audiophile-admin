@@ -30,8 +30,6 @@ const EditProductModal = ({ closeProductModal, product }) => {
   const [serverError, setServerError] = useState(null);
   const { mutate, isPending } = useUpdateProduct();
 
-  console.log(Object.keys(dirtyFields));
-
   const onSubmit = (data) => {
     data._id = product._id;
 

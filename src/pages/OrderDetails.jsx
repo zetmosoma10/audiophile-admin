@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { GoListUnordered } from "react-icons/go";
 import { MdLocalShipping } from "react-icons/md";
 import { FaAddressBook } from "react-icons/fa";
@@ -14,8 +14,6 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 
 const OrderDetails = () => {
   const { orderId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
 
   const {
@@ -34,16 +32,14 @@ const OrderDetails = () => {
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   if (
     isError &&
     (error?.response?.status === 400 || error?.response?.status === 404)
   ) {
-    return navigate("*", { replace: true });
+    return <Navigate to="*" replace={true} />;
   }
 
   // ! UNEXPECTED ERRORS

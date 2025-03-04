@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useGetAnalytics } from "../hooks/useGetAnalytics";
 import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";
 import Table from "../components/table/Table";
@@ -11,8 +11,6 @@ import Button from "../components/Button";
 import Analytics from "../components/Analytics";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
   const { logout } = useAuthStore();
   const { data, isLoading, isError, error, refetch } = useGetAnalytics();
 
@@ -24,9 +22,7 @@ const Dashboard = () => {
   if (isError && error?.response?.status === 401) {
     logout();
 
-    return navigate("/login", {
-      state: { from: location, message: "You should login first" },
-    });
+    return <Navigate to="/login" />;
   }
 
   // ! UNEXPECTED ERRORS

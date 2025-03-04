@@ -5,7 +5,7 @@ const TableBody = ({ data, renderRow }) => {
         data.map((row, index) => renderRow(row, index))
       ) : (
         <tr>
-          <td colSpan="100%" className="py-4 text-center">
+          <td colSpan="100%" className="py-4 text-center font-semibold">
             No Data Available
           </td>
         </tr>
