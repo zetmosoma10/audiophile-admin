@@ -76,7 +76,7 @@ const Users = () => {
                 <Button
                   onClick={() => openUserModal(user)}
                   disabled={user._id === logginUser._id}
-                  className="btn-small btn-danger"
+                  className="btn-sm btn-danger"
                 >
                   Delete
                 </Button>

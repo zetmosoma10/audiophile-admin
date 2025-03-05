@@ -49,7 +49,7 @@ const OrderDetails = () => {
     );
   }
 
-  const vat = currentOrder?.order?.vat * currentOrder?.order?.grandTotal;
+  const vat = currentOrder?.order?.vat * currentOrder?.order?.finalTotal;
 
   let statusColor = "";
   if (currentOrder?.order?.status === "pending") {
@@ -140,7 +140,7 @@ const OrderDetails = () => {
                   {currentOrder?.order?.items?.length} item(s)
                 </span>
                 <span className="text-sm font-bold">
-                  R{currentOrder?.order?.total}
+                  R{currentOrder?.order?.finalTotal}
                 </span>
               </div>
               <div className="flex items-center justify-between">

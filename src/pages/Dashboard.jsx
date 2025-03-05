@@ -47,7 +47,7 @@ const Dashboard = () => {
       <div className="p-4 overflow-x-auto bg-white rounded-lg shadow">
         <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
         <Table
-          columns={["Order ID", "Total", "Customer", "Status", "Created", ""]}
+          columns={["Order ID", "Customer","Total", "Status", "Created", ""]}
           data={data?.latestOrders}
           renderRow={(order, index) => {
             let statusColor = "";
@@ -83,7 +83,7 @@ const Dashboard = () => {
                     <Button
                       type="link"
                       to={`/orders/${order._id}`}
-                      className="btn-small btn-outline"
+                      className="btn-sm btn-outline"
                     >
                       View
                     </Button>

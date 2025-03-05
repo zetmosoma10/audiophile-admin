@@ -29,17 +29,23 @@ const NavBar = ({ openSidebar }) => {
           {user && (
             <Link
               to="profile"
-              className="pr-2 font-medium text-gray-900 border-r-2 opacity-70 border-r-gray-900"
+              className="pr-2 font-medium text-gray-900 border-r-2 opacity-70 border-r-gray-900 focus:outline-none focus:underline"
             >
               {user.firstName}
             </Link>
           )}
           {user ? (
-            <Link to="logout" className="font-semibold">
+            <Link
+              to="logout"
+              className="font-semibold focus:outline-none focus:underline"
+            >
               Logout
             </Link>
           ) : (
-            <Link to="login" className="font-semibold">
+            <Link
+              to="login"
+              className="font-semibold focus:outline-none focus:underline"
+            >
               Login
             </Link>
           )}

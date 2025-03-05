@@ -53,9 +53,10 @@ const Products = () => {
           columns={[
             "Product Name",
             "Category",
-            "Price",
-            "Stock",
+            "Price (Original)",
             "Discount (%)",
+            "Price (Discount)",
+            "Stock",
             "",
           ]}
           data={data?.products}
@@ -68,6 +69,10 @@ const Products = () => {
               <TableCell className="font-medium text-green-500">
                 {row.price}
               </TableCell>
+              <TableCell className="font-medium">{row.discount}</TableCell>
+              <TableCell className="font-medium text-green-500">
+                {row.finalPrice}
+              </TableCell>
               <TableCell
                 className={`${
                   row.stock >= 10 ? "text-indigo-500" : "text-red-500"
@@ -75,11 +80,10 @@ const Products = () => {
               >
                 {row.stock}
               </TableCell>
-              <TableCell className="font-medium">{row.discount}</TableCell>
               <TableCell>
                 <Button
                   onClick={() => openProductModal(row)}
-                  className="btn-small btn-dark"
+                  className="btn-sm btn-dark"
                 >
                   Edit
                 </Button>

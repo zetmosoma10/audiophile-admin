@@ -8,13 +8,6 @@ const DeleteModal = ({ closeDeleteModal, order, user }) => {
   const { mutate: mutateOrder, isPending: isOrderPending } = useDeleteOrder();
   const { mutate: mutateUser, isPending: isUserPending } = useDeleteCustomer();
 
-  let isPending = false;
-  if (order) {
-    isPending = isUserPending;
-  } else if (user) {
-    isPending = isOrderPending;
-  }
-
   const handleOrderMutation = () => {
     mutateOrder(order, {
       onSuccess: (data) => closeDeleteModal(),
@@ -66,13 +59,13 @@ const DeleteModal = ({ closeDeleteModal, order, user }) => {
           ? This action cannot be undone.
         </p>
         <div className="flex items-center justify-end mt-5 space-x-3">
-          <Button onClick={closeDeleteModal} className="btn-small btn-dark">
+          <Button onClick={closeDeleteModal} className="btn-md btn-dark">
             Cancel
           </Button>
           <Button
             disabled={isUserPending || isOrderPending}
             onClick={onSubmit}
-            className="btn-small btn-danger"
+            className="btn-md btn-danger"
           >
             {isUserPending || isOrderPending ? "Deleting..." : "Delete"}
           </Button>

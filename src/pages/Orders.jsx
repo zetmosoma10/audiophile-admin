@@ -104,7 +104,7 @@ export default function OrderTable() {
       ) : (
         <>
           <Table
-            columns={["Order ID", "Total", "Customer", "Status", "Created", ""]}
+            columns={["Order ID", "Customer", "Total", "Status", "Created", ""]}
             data={data?.orders}
             renderRow={(order, index) => {
               let statusColor = "";
@@ -140,7 +140,7 @@ export default function OrderTable() {
                       <Button
                         type="link"
                         to={`/orders/${order._id}`}
-                        className="btn-small btn-outline"
+                        className="btn-sm btn-outline "
                       >
                         View
                       </Button>
@@ -148,14 +148,14 @@ export default function OrderTable() {
                       <Button
                         disabled={order.status === "delivered"}
                         onClick={() => openUpdateModal(order)}
-                        className="btn-small btn-dark"
+                        className="btn-sm btn-dark"
                       >
                         Edit
                       </Button>
 
                       <Button
                         onClick={() => openDeleteModal(order)}
-                        className="btn-small btn-danger"
+                        className="btn-sm btn-danger"
                       >
                         Delete
                       </Button>

@@ -8,7 +8,7 @@ const SideBar = ({ closeSidebar }) => {
       <div className="flex items-center justify-between">
         <Link
           to="/"
-          className="font-extrabold text-gray-900 text-2xl tracking-[-0.8px] pl-2"
+          className="font-extrabold text-gray-900 focus:outline-none text-2xl tracking-[-0.8px] pl-2"
         >
           audiophile
         </Link>
@@ -26,8 +26,8 @@ const SideBar = ({ closeSidebar }) => {
               to={item.path}
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center space-x-2 hover:bg-slate-100 p-2 bg-slate-100 rounded-lg"
-                  : "flex items-center space-x-2 hover:bg-slate-100 p-2 hover:rounded-lg"
+                  ? "flex items-center space-x-2 hover:bg-slate-100 p-2 bg-slate-100 rounded-lg focus:outline-none"
+                  : "flex items-center space-x-2 hover:bg-slate-100 p-2 hover:rounded-lg focus:outline-none focus:bg-slate-100 focus:rounded-lg"
               }
             >
               <item.icon />

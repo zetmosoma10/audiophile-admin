@@ -64,14 +64,11 @@ const UpdateOrderModal = ({ closeUpdateModal, order }) => {
             </select>
           </div>
           <div className="flex items-center justify-end mt-5 space-x-3">
-            <Button onClick={closeUpdateModal} className="btn-small btn-danger">
+            <Button onClick={closeUpdateModal} className=" btn-md btn-danger">
               Cancel
             </Button>
 
-            <Button
-              disabled={isDirty || isPending}
-              className="btn-small btn-dark"
-            >
+            <Button disabled={isDirty || isPending} className="btn-md btn-dark">
               {isPending ? "Submit..." : "Submit"}
             </Button>
           </div>

@@ -1,7 +1,7 @@
 const TableBody = ({ data, renderRow }) => {
   return (
     <tbody>
-      {data.length > 0 ? (
+      {data?.length > 0 ? (
         data.map((row, index) => renderRow(row, index))
       ) : (
         <tr>

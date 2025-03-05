@@ -34,6 +34,7 @@ const EditProductModal = ({ closeProductModal, product }) => {
     data._id = product._id;
 
     mutate(data, {
+      onSuccess: (data) => closeProductModal(),
       onError: (error) => {
         const errorMessage =
           error?.response?.data?.message || "Something went wrong";
@@ -87,16 +88,13 @@ const EditProductModal = ({ closeProductModal, product }) => {
             </div>
           </div>
           <div className="flex items-center justify-end mt-5 space-x-3">
-            <Button
-              onClick={closeProductModal}
-              className="btn-small btn-danger"
-            >
+            <Button onClick={closeProductModal} className="btn-md btn-danger">
               Cancel
             </Button>
 
             <Button
               disabled={isPending || Object.keys(dirtyFields).length === 0}
-              className="btn-small btn-dark"
+              className="btn-md btn-dark"
             >
               {isPending ? "Submit..." : "Submit"}
             </Button>
