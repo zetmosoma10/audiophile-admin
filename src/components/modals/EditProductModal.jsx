@@ -21,9 +21,9 @@ const EditProductModal = ({ closeProductModal, product }) => {
   } = useForm({
     resolver: zodResolver(schema),
     defaultValues: {
-      price: product?.price || 500,
-      stock: product?.stock || 30,
-      discount: product?.discount || 0,
+      price: product?.price,
+      stock: product?.stock,
+      discount: product?.discount,
     },
   });
 

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
 import { useGetAllOrders } from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -72,16 +73,23 @@ export default function OrderTable() {
   return (
     <div className="w-full overflow-x-auto max-container">
       {/* MODALS */}
-      {isUpdateModalOpen && (
-        <UpdateOrderModal
-          order={orderDetails}
-          closeUpdateModal={closeUpdateModal}
-        />
-      )}
+      <AnimatePresence>
+        {isUpdateModalOpen && (
+          <UpdateOrderModal
+            order={orderDetails}
+            closeUpdateModal={closeUpdateModal}
+          />
+        )}
+      </AnimatePresence>
 
-      {isDeleteModalOpen && (
-        <DeleteModal order={orderDetails} closeDeleteModal={closeDeleteModal} />
-      )}
+      <AnimatePresence>
+        {isDeleteModalOpen && (
+          <DeleteModal
+            order={orderDetails}
+            closeDeleteModal={closeDeleteModal}
+          />
+        )}
+      </AnimatePresence>
 
       {/* END OF MODALS */}
       <div className="flex items-start justify-between">

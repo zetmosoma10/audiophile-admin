@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 import { useGetAllProducts } from "../hooks/useGetAllProducts";
 import UnExpectedError from "../components/UnExpectedError";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -39,12 +40,14 @@ const Products = () => {
 
   return (
     <div className="w-full overflow-x-auto max-container">
-      {isEditModalOpen && (
-        <EditProductModal
-          product={product}
-          closeProductModal={closeProductModal}
-        />
-      )}
+      <AnimatePresence>
+        {isEditModalOpen && (
+          <EditProductModal
+            product={product}
+            closeProductModal={closeProductModal}
+          />
+        )}
+      </AnimatePresence>
       <h2 className="text-3xl font-semibold">Products</h2>
       {isLoading ? (
         <LoadingTableSkeleton />

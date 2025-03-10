@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
 import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
@@ -50,9 +51,11 @@ const Users = () => {
 
   return (
     <section className="max-container">
-      {isUserModalOpen && (
-        <DeleteModal closeDeleteModal={closeUserModal} user={userDetails} />
-      )}
+      <AnimatePresence>
+        {isUserModalOpen && (
+          <DeleteModal closeDeleteModal={closeUserModal} user={userDetails} />
+        )}
+      </AnimatePresence>
       <div className="max-container md:mx-0 max-w-0">
         <h3 className="text-3xl font-semibold text-gray-900">Users</h3>
       </div>
