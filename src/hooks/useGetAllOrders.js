@@ -1,20 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useGetAllOrders = (status) => {
-  const query = {};
-  if (status !== "all") {
-    query.status = status;
-  } else {
-    query.status = "";
-  }
+export const useGetAllOrders = (status, page) => {
+  const query = new URLSearchParams({ page });
+  if (status !== "all") query.append("status", status);
 
   return useQuery({
-    queryKey: ["allOrders", status],
+    queryKey: ["allOrders", status, page],
     queryFn: async () => {
-      const { data } = await axiosInstance.get(
-        `/orders?status=${query.status}`
-      );
+      const { data } = await axiosInstance.get("/orders", {
+        params: query,
+      });
       return data;
     },
   });

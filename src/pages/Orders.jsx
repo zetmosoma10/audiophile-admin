@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
@@ -12,16 +12,23 @@ import Table from "../components/table/Table";
 import TableRow from "../components/table/TableRow";
 import TableCell from "../components/table/TableCell";
 import DeleteModal from "../components/modals/DeleteModal";
+import Pagination from "../components/Pagination";
 
 export default function OrderTable() {
   const [orderDetails, setOrderDetails] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page")) || 1;
+  const initialStatus = searchParams.get("status") || "all";
+  const [page, setPage] = useState(initialPage);
+  const [status, setStatus] = useState(initialStatus);
   const { logout } = useAuthStore();
 
-  const status = searchParams.get("status") || "all";
-  const { data, isLoading, isError, error, refetch } = useGetAllOrders(status);
+  const { data, isLoading, isError, error, refetch } = useGetAllOrders(
+    status,
+    page
+  );
 
   // * -- HANDLING MODAL DISPLAY LOGIN
   const openUpdateModal = (order) => {
@@ -46,14 +53,39 @@ export default function OrderTable() {
   // * -- END OF MODAL DISPLAY LOGIN
 
   // * UPDATE SEARCH PARAMS
-  const handleSearchParams = (event) => {
-    const newStatus = event.target.value;
-    if (newStatus === "all") {
-      searchParams.delete("status");
-      setSearchParams(searchParams, { replace: true });
-    } else {
-      setSearchParams({ status: newStatus }, { replace: true });
-    }
+  useEffect(() => {
+    const query = {
+      ...Object.fromEntries(searchParams),
+      page,
+      status,
+    };
+
+    if (page === 1) delete query.page;
+    if (status === "all") delete query.status;
+
+    setSearchParams(query);
+  }, [page, status, setSearchParams, searchParams]);
+
+  // * UPDATE SEARCH PARAMS
+  const handleStatusChange = (status) => {
+    setStatus(status);
+    setPage(1);
+  };
+
+  // * HANDLE PAGINATION
+  const incrementPage = () => {
+    setPage((prevPage) => prevPage + 1);
+    window.scrollTo(0, 0);
+  };
+
+  const decrementPage = () => {
+    setPage((prevPage) => prevPage - 1);
+    window.scrollTo(0, 0);
+  };
+
+  const setCurrentPage = (page) => {
+    setPage(page);
+    window.scrollTo(0, 0);
   };
 
   // ! EXPECTED ERRORS
@@ -95,7 +127,7 @@ export default function OrderTable() {
       <div className="flex items-start justify-between">
         <h2 className="mb-4 text-3xl font-semibold text-gray-900">Orders</h2>
         <select
-          onChange={handleSearchParams}
+          onChange={(e) => handleStatusChange(e.target.value)}
           value={status}
           className="px-3 py-2 m-1 text-base font-semibold bg-white border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
         >
@@ -127,7 +159,7 @@ export default function OrderTable() {
               }
 
               return (
-                <TableRow key={index}>
+                <TableRow key={order._id}>
                   <TableCell className="font-medium">
                     #{order.orderNumber}
                   </TableCell>
@@ -174,6 +206,15 @@ export default function OrderTable() {
             }}
           />
         </>
+      )}
+      {data?.totalPages > 1 && (
+        <Pagination
+          incrementPage={incrementPage}
+          decrementPage={decrementPage}
+          currentPage={page}
+          setCurrentPage={setCurrentPage}
+          totalPages={data?.totalPages}
+        />
       )}
     </div>
   );
