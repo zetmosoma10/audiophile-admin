@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
@@ -12,14 +12,19 @@ import TableRow from "../components/table/TableRow";
 import TableCell from "../components/table/TableCell";
 import Button from "../components/Button";
 import DeleteModal from "../components/modals/DeleteModal";
+import Pagination from "./../components/Pagination";
 
 const Users = () => {
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [userDetails, setUserDetails] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialPage = parseInt(searchParams.get("page")) || 1;
+  const [page, setPage] = useState(initialPage);
   const { logout, token } = useAuthStore();
 
-  const { data, isLoading, isError, error, refetch } = useGetAllCustomers();
+  const { data, isLoading, isError, error, refetch } = useGetAllCustomers(page);
 
+  // * HANDLE MODAL
   const openUserModal = (user) => {
     setUserDetails(user);
     setIsUserModalOpen(true);
@@ -29,11 +34,40 @@ const Users = () => {
     setIsUserModalOpen(false);
   };
 
+  // * END MODAL
   let logginUser;
   if (token) {
     const decodedToken = jwtDecode(token);
     logginUser = decodedToken;
   }
+
+  // * HANDLE SEARCH PARAMS
+  useEffect(() => {
+    const query = {
+      ...Object.fromEntries(searchParams),
+      page,
+    };
+
+    if (page === 1) delete query.page;
+
+    setSearchParams(query, { replace: true });
+  }, [page, searchParams, setSearchParams]);
+
+  // * HANDLE PAGINATION
+  const incrementPage = () => {
+    setPage((prevPage) => prevPage + 1);
+    window.scrollTo(0, 0);
+  };
+
+  const decrementPage = () => {
+    setPage((prevPage) => prevPage - 1);
+    window.scrollTo(0, 0);
+  };
+
+  const setCurrentPage = (page) => {
+    setPage(page);
+    window.scrollTo(0, 0);
+  };
 
   // ! EXPECTED ERRORS
   if (isError && error?.response?.status === 401) {
@@ -86,6 +120,15 @@ const Users = () => {
               </TableCell>
             </TableRow>
           )}
+        />
+      )}
+      {data?.totalPages > 1 && (
+        <Pagination
+          incrementPage={incrementPage}
+          decrementPage={decrementPage}
+          currentPage={page}
+          setCurrentPage={setCurrentPage}
+          totalPages={data?.totalPages}
         />
       )}
     </section>

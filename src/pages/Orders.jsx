@@ -63,7 +63,7 @@ export default function OrderTable() {
     if (page === 1) delete query.page;
     if (status === "all") delete query.status;
 
-    setSearchParams(query);
+    setSearchParams(query, { replace: true });
   }, [page, status, setSearchParams, searchParams]);
 
   // * UPDATE SEARCH PARAMS
@@ -146,7 +146,7 @@ export default function OrderTable() {
           <Table
             columns={["Order ID", "Customer", "Total", "Status", "Created", ""]}
             data={data?.orders}
-            renderRow={(order, index) => {
+            renderRow={(order) => {
               let statusColor = "";
               if (order.status === "pending") {
                 statusColor = "bg-green-300 text-green-700";
