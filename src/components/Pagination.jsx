@@ -9,16 +9,13 @@ const Pagination = ({
 }) => {
   const pageArray = _.range(1, totalPages + 1);
 
-  let bgColor;
-  bgColor = "lightgray";
-
   return (
     <nav className="flex items-center mt-6" aria-label="Pagination">
       <button
         type="button"
         disabled={currentPage === 1}
         onClick={decrementPage}
-        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg bg-white  border border-gray-300 text-gray-800 hover:bg-indigo-500 hover:text-white focus:outline-none focus:bg-indigo-500 disabled:opacity-50 disabled:pointer-events-none"
+        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg bg-white  border border-gray-300 text-gray-800 hover:bg-indigo-500 hover:text-white focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
         aria-label="Previous"
       >
         <svg
@@ -42,9 +39,10 @@ const Pagination = ({
           key={page}
           type="button"
           onClick={() => setCurrentPage(page)}
-          // style={{ backgroundColor: currentPage === page && bgColor }}
-          className={`min-h-[38px] min-w-[38px] flex justify-center items-center bg-white  text-gray-800 hover:text-white focus:text-white border border-gray-200 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none $focus:bg-gray-300 hover:bg-indigo-500  active:bg-indigo-600 disabled:opacity-50 disabled:pointer-events-none  ${
-            currentPage === page && "bg-indigo-600 text-white"
+          className={`min-h-[38px] min-w-[38px] flex justify-center items-center hover:text-white  border border-gray-200 py-2 px-3 text-sm first:rounded-s-lg last:rounded-e-lg focus:outline-none hover:bg-indigo-500   disabled:opacity-50 disabled:pointer-events-none  ${
+            currentPage === page
+              ? "bg-indigo-600 text-white"
+              : "bg-white text-gray-800"
           }`}
           aria-current="page"
         >
@@ -56,7 +54,7 @@ const Pagination = ({
         type="button"
         disabled={currentPage === totalPages}
         onClick={incrementPage}
-        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg bg-white  border border-gray-200 text-gray-800 hover:bg-indigo-500 hover:text-white focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none"
+        className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex justify-center items-center gap-x-1.5 text-sm first:rounded-s-lg last:rounded-e-lg bg-white  border border-gray-200 text-gray-800 hover:bg-indigo-500 hover:text-white focus:outline-none disabled:opacity-50 disabled:pointer-events-none"
         aria-label="Next"
       >
         <span className="hidden sm:block">Next</span>

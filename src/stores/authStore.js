@@ -6,9 +6,9 @@ const getTokenFromLocalStorage = () => {
 
 const useAuthStore = create((set) => ({
   token: getTokenFromLocalStorage(),
-  login: (resToken) => {
-    localStorage.setItem("token-audio-admin", resToken);
-    set({ token: resToken });
+  login: (newToken) => {
+    localStorage.setItem("token-audio-admin", newToken);
+    set({ token: newToken });
   },
   logout: () => {
     localStorage.removeItem("token-audio-admin");

@@ -30,9 +30,9 @@ const Register = () => {
   };
 
   return (
-    <div className="py-10 md:py-16 large_tablet:py-20 bg-slate-50">
-      <div className="w-11/12 mx-auto sm:w-3/4 md:w-1/2">
-        <div className="w-full px-6 py-6 bg-white shadow-md sm:p-7 rounded-xl">
+    <div className="flex items-center justify-center bg-slate-50 min-h-screen">
+      <div className="w-11/12 mx-auto sm:w-3/4 md:w-1/2 my-10">
+        <div className="w-full px-6 py-6 bg-white shadow-md sm:p-7 rounded-xl border">
           <div className="text-center">
             <h1 className="block text-2xl font-bold text-BLACK">Sign up</h1>
             <p className="mt-2 text-sm text-gray-600 ">

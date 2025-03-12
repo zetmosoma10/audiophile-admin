@@ -11,6 +11,8 @@ import Logout from "./pages/Logout";
 import NotFound from "./pages/NotFound";
 import Profile from "./pages/Profile";
 import OrderDetails from "./pages/OrderDetails";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 const router = createBrowserRouter([
   {
@@ -59,6 +61,14 @@ const router = createBrowserRouter([
   {
     path: "register",
     element: <Register />,
+  },
+  {
+    path: "forgotPassword",
+    element: <ForgotPassword />,
+  },
+  {
+    path: "resetPassword",
+    element: <ResetPassword />,
   },
   {
     path: "*",

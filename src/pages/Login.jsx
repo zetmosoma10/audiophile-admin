@@ -32,9 +32,9 @@ const Login = () => {
   };
 
   return (
-    <div className="py-10 md:py-16 large_tablet:py-20 bg-slate-50">
-      <div className="w-11/12 mx-auto sm:w-3/4 md:w-1/2 lg:w-1/3">
-        <div className="w-full px-5 py-6 bg-white shadow-md sm:p-7 rounded-xl">
+    <div className="flex items-center justify-center bg-slate-50 min-h-screen">
+      <div className="w-11/12 mx-auto sm:w-3/4 md:w-1/2 ">
+        <div className="w-full px-5 py-6 bg-white shadow-md sm:p-7 rounded-xl border">
           <div className="text-center">
             <h1 className="block text-2xl font-bold">Sign in</h1>
             <p className="mt-2 text-sm text-gray-600 ">
