@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 import useAuthStore from "../stores/authStore";
 
-export const useRegister = () => {
+const useRegister = () => {
   const { login } = useAuthStore();
 
   return useMutation({
@@ -15,3 +15,5 @@ export const useRegister = () => {
     },
   });
 };
+
+export default useRegister;

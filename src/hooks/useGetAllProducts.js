@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useGetAllProducts = () => {
+const useGetAllProducts = () => {
   return useQuery({
     queryKey: ["allProducts"],
     queryFn: async () => {
@@ -10,3 +10,5 @@ export const useGetAllProducts = () => {
     },
   });
 };
+
+export default useGetAllProducts;

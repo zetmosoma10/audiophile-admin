@@ -1,9 +1,9 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { resetPasswordSchema } from "../schemas/resetPasswordSchema";
 import Input from "../components/Input";
-import { useResetPassword } from "../hooks/useResetPassword";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import useResetPassword from "../hooks/useResetPassword";
 import Button from "../components/Button";
 
 const ResetPassword = () => {

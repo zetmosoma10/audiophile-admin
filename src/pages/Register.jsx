@@ -1,9 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import _ from "lodash";
 import { zodResolver } from "@hookform/resolvers/zod";
+import _ from "lodash";
 import { registerSchema } from "../schemas/registerSchema";
-import { useRegister } from "../hooks/useRegister";
+import useRegister from "../hooks/useRegister";
 import Input from "../components/Input";
 import Button from "../components/Button";
 

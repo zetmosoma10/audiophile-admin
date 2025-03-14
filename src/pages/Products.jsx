@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
-import { useGetAllProducts } from "../hooks/useGetAllProducts";
-import UnExpectedError from "../components/UnExpectedError";
-import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
+import useGetAllProducts from "../hooks/useGetAllProducts";
 import useAuthStore from "../stores/authStore";
+import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
+import UnExpectedError from "../components/UnExpectedError";
 import EditProductModal from "../components/modals/EditProductModal";
 import Button from "../components/Button";
 import TableRow from "../components/table/TableRow";

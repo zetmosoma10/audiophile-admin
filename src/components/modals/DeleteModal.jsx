@@ -1,8 +1,8 @@
 import { toast } from "react-toastify";
-import { useDeleteOrder } from "../../hooks/useDeleteOrder";
+import useDeleteOrder from "../../hooks/useDeleteOrder";
 import Modal from "./Modal";
 import Button from "./../Button";
-import { useDeleteCustomer } from "../../hooks/useDeleteCustomer";
+import useDeleteCustomer from "../../hooks/useDeleteCustomer";
 
 const DeleteModal = ({ closeDeleteModal, order, user }) => {
   const { mutate: mutateOrder, isPending: isOrderPending } = useDeleteOrder();

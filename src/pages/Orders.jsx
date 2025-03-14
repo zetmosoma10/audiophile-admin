@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Navigate, useSearchParams } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
-import { useGetAllOrders } from "./../hooks/useGetAllOrders";
+import useGetAllOrders from "./../hooks/useGetAllOrders";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import UpdateOrderModal from "../components/modals/UpdateOrderModal";

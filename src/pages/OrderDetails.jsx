@@ -5,7 +5,7 @@ import { FaAddressBook } from "react-icons/fa";
 import { MdOutlinePayment } from "react-icons/md";
 import dayjs from "dayjs";
 import BackLink from "../components/BackLink";
-import { useGetOrder } from "../hooks/useGetOrder";
+import useGetOrder from "../hooks/useGetOrder";
 import LoadingOrderSkeleton from "../skeletons/LoadingOrderSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";

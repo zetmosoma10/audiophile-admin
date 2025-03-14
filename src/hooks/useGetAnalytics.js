@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useGetAnalytics = () => {
+const useGetAnalytics = () => {
   return useQuery({
     queryKey: ["analytics"],
     queryFn: async () => {
@@ -10,3 +10,5 @@ export const useGetAnalytics = () => {
     },
   });
 };
+
+export default useGetAnalytics;

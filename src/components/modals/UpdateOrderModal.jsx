@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { useUpdateOrderStatus } from "../../hooks/useUpdateOrderStatus";
+import useUpdateOrderStatus from "../../hooks/useUpdateOrderStatus";
 import Modal from "./Modal";
 import Button from "../Button";
 

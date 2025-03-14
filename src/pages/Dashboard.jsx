@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import { useGetAnalytics } from "../hooks/useGetAnalytics";
-import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
 import { Navigate } from "react-router-dom";
+import dayjs from "dayjs";
+import useGetAnalytics from "../hooks/useGetAnalytics";
+import LoadingDashboardSkeleton from "../skeletons/LoadingDashboardSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";
 import Table from "../components/table/Table";

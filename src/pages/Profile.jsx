@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
-import { useGetCustomer } from "../hooks/useGetCustomer";
 import { Link, Navigate } from "react-router-dom";
+import dayjs from "dayjs";
+import useGetCustomer from "../hooks/useGetCustomer";
 import BackLink from "../components/BackLink";
 import LoadingProfileSkeleton from "../skeletons/LoadingProfileSkeleton";
 import UnExpectedError from "../components/UnExpectedError";

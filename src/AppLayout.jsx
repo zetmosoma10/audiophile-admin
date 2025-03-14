@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
-import { useEffect, useState } from "react";
 
 function AppLayout() {
   const [isOpen, setIsOpen] = useState(false);

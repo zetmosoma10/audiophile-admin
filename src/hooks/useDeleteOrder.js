@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useDeleteOrder = () => {
+const useDeleteOrder = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -12,3 +12,5 @@ export const useDeleteOrder = () => {
     onSettled: () => queryClient.invalidateQueries(["allOrders"]),
   });
 };
+
+export default useDeleteOrder;

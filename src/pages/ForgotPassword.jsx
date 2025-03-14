@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
 import z from "zod";
 import Input from "../components/Input";
-import { useForgotPassword } from "../hooks/useForgotPassword";
-import { toast } from "react-toastify";
+import useForgotPassword from "../hooks/useForgotPassword";
 import Button from "../components/Button";
 
 const schema = z.object({

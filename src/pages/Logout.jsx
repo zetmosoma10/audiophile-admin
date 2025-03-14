@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import useAuthStore from "../stores/authStore";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "../stores/authStore";
 
 const Logout = () => {
   const navigate = useNavigate();

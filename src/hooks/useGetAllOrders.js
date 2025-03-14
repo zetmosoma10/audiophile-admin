@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useGetAllOrders = (status, page) => {
+const useGetAllOrders = (status, page) => {
   const query = new URLSearchParams({ page });
   if (status !== "all") query.append("status", status);
 
@@ -15,3 +15,5 @@ export const useGetAllOrders = (status, page) => {
     },
   });
 };
+
+export default useGetAllOrders;

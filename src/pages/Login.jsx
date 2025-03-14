@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "../schemas/loginSchema";
-import { useLogin } from "../hooks/useLogin";
+import useLogin from "../hooks/useLogin";
 import Input from "../components/Input";
 import Button from "../components/Button";
 

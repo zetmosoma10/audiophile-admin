@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
-import useAuthStore from "./../stores/authStore";
 import { jwtDecode } from "jwt-decode";
+import useAuthStore from "./../stores/authStore";
 
 const NavBar = ({ openSidebar }) => {
   const { token } = useAuthStore();

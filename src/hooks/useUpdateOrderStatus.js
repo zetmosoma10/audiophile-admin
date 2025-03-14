@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useUpdateOrderStatus = () => {
+const useUpdateOrderStatus = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -42,3 +42,5 @@ export const useUpdateOrderStatus = () => {
     onSettled: () => queryClient.invalidateQueries(["allOrders"]),
   });
 };
+
+export default useUpdateOrderStatus;

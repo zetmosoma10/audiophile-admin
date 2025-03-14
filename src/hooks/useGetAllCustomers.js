@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useGetAllCustomers = (page) => {
+const useGetAllCustomers = (page) => {
   const query = new URLSearchParams({ page });
 
   return useQuery({
@@ -12,3 +12,5 @@ export const useGetAllCustomers = (page) => {
     },
   });
 };
+
+export default useGetAllCustomers;

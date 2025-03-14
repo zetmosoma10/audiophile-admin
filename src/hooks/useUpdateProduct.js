@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 
-export const useUpdateProduct = () => {
+const useUpdateProduct = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -41,3 +41,5 @@ export const useUpdateProduct = () => {
     onSettled: () => queryClient.invalidateQueries(["allProducts"]),
   });
 };
+
+export default useUpdateProduct;

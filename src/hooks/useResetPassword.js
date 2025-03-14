@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "./axiosInstance";
 import useAuthStore from "../stores/authStore";
 
-export const useResetPassword = () => {
+const useResetPassword = () => {
   const { login } = useAuthStore();
 
   return useMutation({
@@ -16,3 +16,5 @@ export const useResetPassword = () => {
     onSuccess: (data) => login(data.token),
   });
 };
+
+export default useResetPassword;
