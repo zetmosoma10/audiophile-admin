@@ -9,6 +9,7 @@ import TableRow from "../components/table/TableRow";
 import TableCell from "../components/table/TableCell";
 import Button from "../components/Button";
 import Analytics from "../components/Analytics";
+import OrderStatusChart from "../components/OrderStatusChart";
 
 const Dashboard = () => {
   const { logout } = useAuthStore();
@@ -36,18 +37,21 @@ const Dashboard = () => {
     <div className="min-h-screen text-gray-900 max-container">
       <h1 className="mb-6 text-3xl font-bold">Admin Dashboard</h1>
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 gap-6 mb-6 sm:grid-cols-2 large_tablet:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 mb-10 sm:grid-cols-2 lg:grid-cols-4">
         <Analytics name="Total Orders" total={data?.totalOrders} />
         <Analytics name="Total Users" total={data?.totalCustomers} />
         <Analytics name="Total Products" total={data?.totalProducts} />
         <Analytics name="Revenue" total={data?.totalRevenue} />
       </div>
 
+      {/* Charts summary */}
+      <OrderStatusChart orderStats={data?.orderStats} />
+
       {/* Recent Orders Table */}
-      <div className="p-4 overflow-x-auto bg-white rounded-lg shadow">
+      <div className="p-4 overflow-x-auto bg-white rounded-lg shadow mt-10">
         <h2 className="mb-4 text-xl font-semibold">Recent Orders</h2>
         <Table
-          columns={["Order ID", "Customer","Total", "Status", "Created", ""]}
+          columns={["Order ID", "Customer", "Total", "Status", "Created", ""]}
           data={data?.latestOrders}
           renderRow={(order, index) => {
             let statusColor = "";

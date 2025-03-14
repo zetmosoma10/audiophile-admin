@@ -14,7 +14,7 @@ const Analytics = ({ name, total }) => {
     <div className="p-4 bg-white border border-r rounded-lg shadow">
       <p className="text-gray-600">{name}</p>
       <h2
-        className={`text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r ${color}`}
+        className={`text-3xl font-bold text-wrap text-transparent bg-clip-text bg-gradient-to-r ${color}`}
       >
         {name === "Revenue" && "R"}
         {Math.round(total)}
