@@ -3,7 +3,7 @@ import { Navigate, useSearchParams } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { AnimatePresence } from "motion/react";
 import dayjs from "dayjs";
-import { useGetAllCustomers } from "../hooks/useGetAllCustomers";
+import useGetAllCustomers from "../hooks/useGetAllCustomers";
 import LoadingTableSkeleton from "../skeletons/LoadingTableSkeleton";
 import UnExpectedError from "../components/UnExpectedError";
 import useAuthStore from "../stores/authStore";
